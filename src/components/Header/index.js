@@ -1,4 +1,6 @@
-import { Container, Menu, MenuItens, BtnHeader } from './styles';
+import { Link } from 'react-router-dom';
+
+import { Container, Menu, BtnHeader } from './styles';
 
 import logo from '../../assets/images/logo.svg';
 
@@ -7,11 +9,16 @@ export default function Header() {
     <Container>
       <img src={logo} alt="BolãoRFC" />
       <Menu>
-        <MenuItens href="#">Palpites</MenuItens>
-        <MenuItens href="#">Classificação</MenuItens>
-        <MenuItens href="#">Regulamentos</MenuItens>
+        <Link to="#">Bolões</Link>
+        <Link to="/palpite">Palpites</Link>
+        <Link to="#">Regulamentos</Link>
       </Menu>
-      <BtnHeader href="#"> Sair </BtnHeader>
+      <BtnHeader primary>
+        <Link to="/administracao" > Admin </Link>
+      </BtnHeader>
+      <BtnHeader>
+        <Link to="#"> Sair </Link>
+      </BtnHeader>
     </Container>
   );
 }
