@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  margin-top: 32px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  //margin-top: 32px;
+  //position: relative;
+  //display: flex;
+  //flex-direction: column;
+  //align-items: center;
 `;
 
 export const Card = styled.div`

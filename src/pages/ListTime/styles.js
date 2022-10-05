@@ -1,12 +1,9 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  margin: 0 auto;
-  margin-top: 32px;
+  //margin: 0 auto;
+  //margin-top: 32px;
   position: relative;
-  width: 100%;
-  max-width: 800px;
-  padding: 0 16px;
 `;
 
 export const InputSearchContainer = styled.div`

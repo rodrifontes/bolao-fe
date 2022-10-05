@@ -64,7 +64,7 @@ export default function ListTimes() {
         <strong>
           3 times
         </strong>
-        <Link to="/new">Novo Time</Link>
+        <Link to="new">Novo Time</Link>
       </Header>
 
       <ListHeader orderBy={orderBy}>
@@ -80,7 +80,7 @@ export default function ListTimes() {
           <span>América MG</span>
         </div>
         <div className="actions">
-          <Link to={`/edit/1`}>
+          <Link to={`/times/edit/1`}>
             <img src={edit} alt="Edit" />
           </Link>
           <button

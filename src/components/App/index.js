@@ -7,7 +7,7 @@ import defaultTheme from '../../assets/styles/themes/default';
 import Header from '../Header';
 import Rotas from '../../Rotas';
 
-import { Container } from './styles';
+import { Container, Body } from './styles';
 
 function App() {
   return (
@@ -17,7 +17,9 @@ function App() {
 
         <Container>
           <Header />
-          <Rotas />
+          <Body>
+            <Rotas />
+          </Body>
         </Container>
       </ThemeProvider>
     </BrowserRouter>
