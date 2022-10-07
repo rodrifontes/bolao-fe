@@ -1,6 +1,6 @@
 import HttpClient from './utils/HttpClient';
 
-class TimesService {
+class TimeService {
 
   constructor() {
     this.httpClient = new HttpClient('http://localhost:3001');
@@ -28,4 +28,4 @@ class TimesService {
 
 }
 
-export default new TimesService();
+export default new TimeService();

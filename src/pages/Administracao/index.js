@@ -9,7 +9,7 @@ export default function Administracao() {
         <Link to="/Times">
           Times
         </Link>
-        <Link to="/Times">
+        <Link to="/Campeonatos">
           Campeonatos
         </Link>
         <Link to="/Times">

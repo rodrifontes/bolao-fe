@@ -5,6 +5,7 @@ import Administracao from './pages/Administracao';
 import ListTimes from './pages/ListTime';
 import NewTimes from './pages/NewTime';
 import EditTimes from './pages/EditTime';
+import ListCampeonatos from './pages/ListCampeonatos';
 
 export default function Rotas() {
   return (
@@ -15,6 +16,7 @@ export default function Rotas() {
       <Route path="/times" element={<ListTimes />} />
       <Route path="/times/new" element={<NewTimes />} />
       <Route path="/times/edit/:id" element={<EditTimes />} />
+      <Route path="/campeonatos" element={<ListCampeonatos />} />
     </Routes>
   );
 }
