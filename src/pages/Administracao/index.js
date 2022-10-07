@@ -6,16 +6,16 @@ export default function Administracao() {
   return (
     <Container>
       <Menu>
-        <Link to="/Times">
+        <Link to="/times">
           Times
         </Link>
-        <Link to="/Campeonatos">
+        <Link to="/campeonatos">
           Campeonatos
         </Link>
-        <Link to="/Times">
+        <Link to="/times">
           Jogos
         </Link>
-        <Link to="/Times">
+        <Link to="/times">
           Usuários
         </Link>
       </Menu>

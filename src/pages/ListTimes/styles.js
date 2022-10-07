@@ -91,7 +91,7 @@ export const Card = styled.div`
     margin-top: 16px;
   }
 
-  .time {
+  .info {
     display: flex;
     align-items: center;
 
@@ -99,29 +99,6 @@ export const Card = styled.div`
       width: 60px;
       height: 60px;
       margin: 8px
-    }
-  }
-
-  .info {
-    .contact-name {
-      display: flex;
-      align-items: center;
-
-      small{
-        background: ${({ theme }) => theme.colors.primary.lighter};
-        color: ${({ theme }) => theme.colors.primary.main};
-        font-weight: bold;
-        text-transform: uppercase;
-        padding: 4px;
-        border-radius: 4px;
-        margin-left: 8px;
-      }
-    }
-
-    span {
-      display: block;
-      font-size: 14px;
-      color: ${({ theme }) => theme.colors.gray[200]};
     }
   }
 

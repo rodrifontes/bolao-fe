@@ -2,70 +2,70 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 
 import FormHeader from "../../components/FormHeader";
-import FormTime from "../../components/FormTime";
+import FormCampeonato from "../../components/FormCampeonato";
 import Loader from '../../components/Loader';
 
-import TimeService from '../../services/TimeService';
+import CampeonatoService from '../../services/CampeonatoService';
 import toast from '../../utils/toast';
 import useSafeAsyncAction from '../../hooks/useSafeAsyncAction';
 
 export default function EditTimes() {
   const [isLoading, setIsLoading] = useState(true);
-  const [timeNome, setTimeNome] = useState('');
+  const [campeonatoNome, setCampeonatoNome] = useState('');
 
-  const formTimeRef = useRef(null);
+  const formCampeonatoRef = useRef(null);
 
   const { id } = useParams();
   const history = useNavigate();
   const safeAsyncAction = useSafeAsyncAction();
 
   useEffect(() => {
-    async function loadTime() {
+    async function loadCampeonato() {
       try {
-        const time = await TimeService.getTimeById(
+        const campeonato = await CampeonatoService.getCampeonatoById(
           id,
         );
 
         safeAsyncAction(() => {
-          formTimeRef.current.setFieldsValues(time);
+          formCampeonatoRef.current.setFieldsValues(campeonato);
 
           setIsLoading(false);
-          setTimeNome(time.nome);
+          setCampeonatoNome(campeonato.nome);
         });
       } catch {
         safeAsyncAction(() => {
-          history('/times');
+          history('/campeonatos');
           toast({
             type: 'danger',
-            text: 'Time não econtrado!',
+            text: 'Campeonato não econtrado!',
           });
         });
       }
     }
 
-    loadTime();
+    loadCampeonato();
   }, [id, safeAsyncAction])
 
   async function handleSubmit(formData) {
     try {
-      const time = {
+      const campeonato = {
         nome: formData.nome,
         nome_reduzido: formData.nomeReduzido,
         path_escudo: formData.pathEscudo,
       };
 
-      const timeData = await TimeService.updateTime(id, time);
+      const campeonatoData = await CampeonatoService.updateCampeonato(id, campeonato);
 
-      setTimeNome(timeData.nome);
+      setCampeonatoNome(campeonatoData.nome);
 
       toast({
         type: 'sucess',
-        text: 'Time alterado com sucesso!',
+        text: 'Campeonato alterado com sucesso!',
       });
     } catch {
       toast({
         type: 'danger',
-        text: 'Ocorreu um erro ao cadastrar o time!',
+        text: 'Ocorreu um erro ao cadastrar o campeonato!',
       });
     }
   }
@@ -74,10 +74,10 @@ export default function EditTimes() {
     <>
       <Loader isLoading={isLoading} />
 
-      <FormHeader title={isLoading ? 'Carregando...' : `Editar ${timeNome}`} />
+      <FormHeader title={isLoading ? 'Carregando...' : `Editar ${campeonatoNome}`} />
 
-      <FormTime
-        ref={formTimeRef}
+      <FormCampeonato
+        ref={formCampeonatoRef}
         buttonLabel="Salvar alterações"
         onSubmit={handleSubmit}
       />

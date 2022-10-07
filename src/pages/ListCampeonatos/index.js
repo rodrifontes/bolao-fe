@@ -86,11 +86,11 @@ export default function ListCampeonatos() {
     setCampeonatoBeingDeleted(null);
   }
 
-  async function handleConfirmDeleteTime() {
+  async function handleConfirmDeleteCampeonato() {
     try {
       setIsLoadingDelete(true);
 
-      await CampeonatoService.deleteTime(campeonatoBeingDeleted.id);
+      await CampeonatoService.deleteCampeonato(campeonatoBeingDeleted.id);
 
       setCampeonatos(prevState => prevState.filter(
         (campeonato) => campeonato.id !== campeonatoBeingDeleted.id
@@ -99,12 +99,12 @@ export default function ListCampeonatos() {
 
       toast({
         type: 'sucess',
-        text: 'Time deletado com sucesso!',
+        text: 'Campeonato deletado com sucesso!',
       });
     } catch {
       toast({
         type: 'danger',
-        text: 'Ocorreu um erro ao deletar o time!',
+        text: 'Ocorreu um erro ao deletar o campeonato!',
       });
     } finally {
       setIsLoadingDelete(false);
@@ -119,10 +119,10 @@ export default function ListCampeonatos() {
         danger
         isLoading={isLoadingDelete}
         visible={isDeleteModalVisible}
-        title={`Tem certeza que deseja remover o time "${campeonatoBeingDeleted?.nome}"?`}
+        title={`Tem certeza que deseja remover o campeonato "${campeonatoBeingDeleted?.nome}"?`}
         confirmLabel="Deletar"
         onCancel={handleCloseDeleteModal}
-        onConfirm={handleConfirmDeleteTime}
+        onConfirm={handleConfirmDeleteCampeonato}
       >
         <p>Esta ação não poderá ser desfeita!</p>
       </Modal>
@@ -133,7 +133,7 @@ export default function ListCampeonatos() {
             <input
               value={searchTerm}
               type="text"
-              placeholder="Pesquisar contato..."
+              placeholder="Pesquisar campeonato..."
               onChange={handleChangeSearchTerm}
             />
           </InputSearchContainer>
@@ -157,7 +157,7 @@ export default function ListCampeonatos() {
             {filteredCampeoantos.length === 1 ? ' campeonato' : ' campeonatos'}
           </strong>
         )}
-        <Link to="new">Novo Campeonato</Link>
+        <Link to="new">Novo campeonato</Link>
       </Header>
 
       {
@@ -213,8 +213,7 @@ export default function ListCampeonatos() {
 
             {filteredCampeoantos.map((campeonato) => (
               <Card key={campeonato.id}>
-                <div className="campeonato">
-                  <img src={campeonato.path_escudo} alt={campeonato.nome} />
+                <div className="info">
                   <span>{campeonato.nome}</span>
                 </div>
                 <div className="actions">

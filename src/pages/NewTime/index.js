@@ -4,7 +4,7 @@ import FormTime from '../../components/FormTime';
 import TimeService from '../../services/TimeService';
 import toast from '../../utils/toast';
 
-export default function NewTimes() {
+export default function NewTime() {
   const formTimeRef = useRef(null);
 
   async function handleSubmit(formData) {
@@ -33,7 +33,7 @@ export default function NewTimes() {
 
   return (
     <>
-      <FormHeader title="Novo Time" />
+      <FormHeader title="Novo time" />
       <FormTime
         ref={formTimeRef}
         buttonLabel="Cadastrar"

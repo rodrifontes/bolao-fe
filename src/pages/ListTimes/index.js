@@ -133,7 +133,7 @@ export default function ListTimes() {
             <input
               value={searchTerm}
               type="text"
-              placeholder="Pesquisar contato..."
+              placeholder="Pesquisar time..."
               onChange={handleChangeSearchTerm}
             />
           </InputSearchContainer>
@@ -157,7 +157,7 @@ export default function ListTimes() {
             {filteredTimes.length === 1 ? ' time' : ' times'}
           </strong>
         )}
-        <Link to="new">Novo Time</Link>
+        <Link to="new">Novo time</Link>
       </Header>
 
       {
@@ -213,7 +213,7 @@ export default function ListTimes() {
 
             {filteredTimes.map((time) => (
               <Card key={time.id}>
-                <div className="time">
+                <div className="info">
                   <img src={time.path_escudo} alt={time.nome} />
                   <span>{time.nome}</span>
                 </div>
