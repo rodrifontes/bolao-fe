@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 
 import {
   Card,
@@ -7,6 +7,9 @@ import {
   InputSearchContainer,
   Header,
   ListHeader,
+  ErrorContainer,
+  EmptyListContainer,
+  SearchNotFoundContainer,
 } from './styles';
 
 import arrow from '../../assets/images/icons/arrow.svg';
@@ -20,20 +23,44 @@ import Loader from '../../components/Loader';
 import Button from '../../components/Button';
 import Modal from '../../components/Modal';
 
+import TimeService from '../../services/TimeService';
+
 import toast from '../../utils/toast';
 
-import america_mg from '../../assets/images/escudos/america-mg.svg';
-import atletico_pr from '../../assets/images/escudos/atletico-pr.svg';
-import atletico_go from '../../assets/images/escudos/atletico-go.svg';
-
 export default function ListTimes() {
+  const [times, setTimes] = useState([]);
   const [orderBy, setOrderBy] = useState('asc');
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  //const [hasError, setHasError] = useState(false);
-  //const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-  //const [contactBeingDeleted, setcontactBeingDeleted] = useState(null);
-  //const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [timeBeingDeleted, setTimeBeingDeleted] = useState(null);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+
+  const filteredTimes = useMemo(() => {
+    return times.filter((time) => (
+      time.nome.toLowerCase().includes(searchTerm.toLowerCase())
+    ));
+  }, [times, searchTerm])
+
+  const loadTimes = useCallback(async () => {
+    try {
+      setIsLoading(true);
+
+      const timesList = await TimeService.listTimes(orderBy);
+
+      setHasError(false);
+      setTimes(timesList);
+    } catch {
+      setHasError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [orderBy]);
+
+  useEffect(() => {
+    loadTimes();
+  }, [loadTimes])
 
   function handleToggleOrderBy() {
     setOrderBy(
@@ -45,88 +72,167 @@ export default function ListTimes() {
     setSearchTerm(event.target.value);
   }
 
+  function handleTryAgain() {
+    loadTimes();
+  }
+
+  function handleDeleteTime(time) {
+    setTimeBeingDeleted(time);
+    setIsDeleteModalVisible(true);
+  }
+
+  function handleCloseDeleteModal() {
+    setIsDeleteModalVisible(false);
+    setTimeBeingDeleted(null);
+  }
+
+  async function handleConfirmDeleteTime() {
+    try {
+      setIsLoadingDelete(true);
+
+      await TimeService.deleteTime(timeBeingDeleted.id);
+
+      setTimes(prevState => prevState.filter(
+        (time) => time.id !== timeBeingDeleted.id
+      ));
+      handleCloseDeleteModal();
+
+      toast({
+        type: 'sucess',
+        text: 'Time deletado com sucesso!',
+      });
+    } catch {
+      toast({
+        type: 'danger',
+        text: 'Ocorreu um erro ao deletar o time!',
+      });
+    } finally {
+      setIsLoadingDelete(false);
+    }
+  }
+
   return (
     <Container>
       <Loader isLoading={isLoading} />
 
-      <InputSearchContainer>
-        <input
-          value={searchTerm}
-          type="text"
-          placeholder="Pesquisar time..."
-          onChange={handleChangeSearchTerm}
-        />
-      </InputSearchContainer>
+      <Modal
+        danger
+        isLoading={isLoadingDelete}
+        visible={isDeleteModalVisible}
+        title={`Tem certeza que deseja remover o time "${timeBeingDeleted?.nome}"?`}
+        confirmLabel="Deletar"
+        onCancel={handleCloseDeleteModal}
+        onConfirm={handleConfirmDeleteTime}
+      >
+        <p>Esta ação não poderá ser desfeita!</p>
+      </Modal>
+
+      {
+        times.length > 0 && (
+          <InputSearchContainer>
+            <input
+              value={searchTerm}
+              type="text"
+              placeholder="Pesquisar contato..."
+              onChange={handleChangeSearchTerm}
+            />
+          </InputSearchContainer>
+        )
+      }
 
       <Header
-        justifyContent='space-between'
+        justifyContent={
+          hasError
+            ? 'flex-end'
+            : (
+              times.length > 0
+                ? 'space-between'
+                : 'center'
+            )
+        }
       >
-        <strong>
-          3 times
-        </strong>
+        {(!hasError && times.length > 0) && (
+          <strong>
+            {filteredTimes.length}
+            {filteredTimes.length === 1 ? ' time' : ' times'}
+          </strong>
+        )}
         <Link to="new">Novo Time</Link>
       </Header>
 
-      <ListHeader orderBy={orderBy}>
-        <button type="button" onClick={handleToggleOrderBy}>
-          <span>Nome</span>
-          <img src={arrow} alt="Arrow" />
-        </button>
-      </ListHeader>
+      {
+        hasError && (
+          <ErrorContainer>
+            <img src={sad} alt="Sad" />
 
-      <Card>
-        <div className="time">
-          <img src={america_mg} alt="América MG" />
-          <span>América MG</span>
-        </div>
-        <div className="actions">
-          <Link to={`/times/edit/1`}>
-            <img src={edit} alt="Edit" />
-          </Link>
-          <button
-            type="button"
-            onClick={() => alert('oi')}
-          >
-            <img src={trash} alt="Delete" />
-          </button>
-        </div>
-      </Card>
+            <div className="details">
+              <strong>Ocorreu um erro ao obter os seus times!</strong>
 
-      <Card>
-        <div className="time">
-          <img src={atletico_pr} alt="Atlético PR" />
-          <span>Atlético PR</span>
-        </div>
-        <div className="actions">
-          <Link to={`/edit/1`}>
-            <img src={edit} alt="Edit" />
-          </Link>
-          <button
-            type="button"
-            onClick={() => alert('oi')}
-          >
-            <img src={trash} alt="Delete" />
-          </button>
-        </div>
-      </Card>
+              <Button type="Button" onClick={handleTryAgain}>
+                Tentar novamente
+              </Button>
+            </div>
+          </ErrorContainer>
+        )
+      }
 
-      <Card>
-        <div className="time">
-          <img src={atletico_go} alt="Atlético GO" />
-          <span>Atlético GO</span>
-        </div>
-        <div className="actions">
-          <Link to={`/edit/1`}>
-            <img src={edit} alt="Edit" />
-          </Link>
-          <button
-            type="button"
-            onClick={() => alert('oi')}
-          >
-            <img src={trash} alt="Delete" />
-          </button>
-        </div>
-      </Card>
-    </Container>
+      {
+        !hasError && (
+          <>
+
+            {(times.length < 1 && !isLoading) && (
+              <EmptyListContainer>
+                <img src={emptyBox} alt="Empty box" />
+
+                <p>
+                  Você ainda não tem nenhum time cadastrado!
+                  Clique no botão <strong>"Novo time"</strong> à cima
+                  para cadastrar o seu primeiro!
+                </p>
+              </EmptyListContainer>
+            )}
+
+            {(times.length > 0 && filteredTimes.length < 1) &&
+              <SearchNotFoundContainer>
+                <img src={magnifierQuestion} alt="Magnifier Question" />
+
+                <span>
+                  Nenhum resultado foi encontrado para <strong>"{searchTerm}"</strong>
+                </span>
+              </SearchNotFoundContainer>
+            }
+
+            {filteredTimes.length > 0 && (
+              <ListHeader orderBy={orderBy}>
+                <button type="button" onClick={handleToggleOrderBy}>
+                  <span>Nome</span>
+                  <img src={arrow} alt="Arrow" />
+                </button>
+              </ListHeader>
+            )}
+
+            {filteredTimes.map((time) => (
+              <Card key={time.id}>
+                <div className="time">
+                  <img src={time.path_escudo} alt={time.nome} />
+                  <span>{time.nome}</span>
+                </div>
+                <div className="actions">
+                  <Link to={`/times/edit/${time.id}`}>
+                    <img src={edit} alt="Edit" />
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteTime(time)}
+                  >
+                    <img src={trash} alt="Delete" />
+                  </button>
+                </div>
+              </Card>
+            ))}
+          </>
+        )
+      }
+    </Container >
   );
 }

@@ -12,6 +12,7 @@ import Button from '../Button';
 const FormTime = forwardRef(({ buttonLabel, onSubmit }, ref) => {
   const [nome, setNome] = useState('');
   const [nomeReduzido, setNomeReduzido] = useState('');
+  const [pathEscudo, setPathEscudo] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -26,11 +27,13 @@ const FormTime = forwardRef(({ buttonLabel, onSubmit }, ref) => {
   useImperativeHandle(ref, () => ({
     setFieldsValues: (time) => {
       setNome(time.nome ?? '');
-      setNomeReduzido(time.nomeReduzido ?? '');
+      setNomeReduzido(time.nome_reduzido ?? '');
+      setPathEscudo(time.path_escudo ?? '');
     },
     resetFields: () => {
       setNome('');
       setNomeReduzido('');
+      setPathEscudo('');
     }
   }), [])
 
@@ -54,13 +57,23 @@ const FormTime = forwardRef(({ buttonLabel, onSubmit }, ref) => {
     }
   }
 
+  function handlePathEscudoChange(event) {
+    setPathEscudo(event.target.value);
+
+    if (!event.target.value) {
+      setError({ field: 'pathEscudo', message: 'O link do escudo é obrigatório.' });
+    } else {
+      removeError('pathEscudo');
+    }
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
 
     setIsSubmitting(true);
 
     await onSubmit({
-      nome, nomeReduzido,
+      nome, nomeReduzido, pathEscudo,
     });
 
     setIsSubmitting(false);
@@ -84,6 +97,16 @@ const FormTime = forwardRef(({ buttonLabel, onSubmit }, ref) => {
           value={nomeReduzido}
           onChange={handleNomeReduzidoChange}
           error={getErrorMessageByFieldName('nomeReduzido')}
+          disabled={isSubmitting}
+        />
+      </FormGroup>
+
+      <FormGroup error={getErrorMessageByFieldName('pathEscudo')}>
+        <Input
+          placeholder="Link Escudo *"
+          value={pathEscudo}
+          onChange={handlePathEscudoChange}
+          error={getErrorMessageByFieldName('pathEscudo')}
           disabled={isSubmitting}
         />
       </FormGroup>

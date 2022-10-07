@@ -9,8 +9,8 @@ export default function Header() {
     <Container>
       <img src={logo} alt="BolãoRFC" />
       <Menu>
-        <Link to="#">Bolões</Link>
         <Link to="/palpite">Palpites</Link>
+        <Link to="#">Ranking</Link>
         <Link to="#">Regulamentos</Link>
       </Menu>
       <BtnHeader primary>

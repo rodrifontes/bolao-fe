@@ -12,6 +12,7 @@ export default function NewTimes() {
       const time = {
         nome: formData.nome,
         nome_reduzido: formData.nomeReduzido,
+        path_escudo: formData.pathEscudo,
       };
 
       await TimeService.createTime(time);
@@ -20,7 +21,7 @@ export default function NewTimes() {
 
       toast({
         type: 'sucess',
-        text: 'Times Cadastrado com sucesso!',
+        text: 'Time cadastrado com sucesso!',
       });
     } catch {
       toast({

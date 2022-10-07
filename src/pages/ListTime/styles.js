@@ -136,3 +136,49 @@ export const Card = styled.div`
     }
   }
 `;
+
+export const ErrorContainer = styled.div`
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+
+  .details {
+    margin-left: 24px;
+
+    strong {
+      font-size: 22px;
+      color: ${({ theme }) => theme.colors.danger.main};
+      display: block;
+      margin-bottom: 8px;
+    }
+  }
+`;
+
+export const EmptyListContainer = styled.div`
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    margin-top: 8px;
+    color: ${({ theme }) => theme.colors.gray[200]};
+    text-align: center;
+
+    strong {
+      color: ${({ theme }) => theme.colors.primary.main};
+    }
+  }
+`;
+
+export const SearchNotFoundContainer = styled.div`
+  margin-top: 16px;
+  display: flex;
+  align-items: flex-start;
+
+  span {
+    color: ${({ theme }) => theme.colors.gray[200]};
+    margin-left: 24px;
+    word-break: break-word;
+  }
+`;

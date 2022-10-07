@@ -9,11 +9,14 @@ import Rotas from '../../Rotas';
 
 import { Container, Body } from './styles';
 
+import ToastContainer from '../Toast/ToastContainer';
+
 function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={defaultTheme}>
         <GlobalStyles />
+        <ToastContainer />
 
         <Container>
           <Header />
