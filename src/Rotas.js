@@ -11,6 +11,8 @@ import ListCampeonatos from './pages/ListCampeonatos';
 import NewCampeonato from './pages/NewCampeonato';
 import EditCampeonato from './pages/EditCampeonato';
 
+import NewJogo from './pages/NewJogo';
+
 export default function Rotas() {
   return (
     <Routes>
@@ -23,6 +25,7 @@ export default function Rotas() {
       <Route path="/campeonatos" element={<ListCampeonatos />} />
       <Route path="/campeonatos/new" element={<NewCampeonato />} />
       <Route path="/campeonatos/edit/:id" element={<EditCampeonato />} />
+      <Route path="/jogos/new" element={<NewJogo />} />
     </Routes>
   );
 }

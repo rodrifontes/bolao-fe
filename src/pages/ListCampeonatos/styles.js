@@ -4,6 +4,23 @@ export const Container = styled.div`
   //margin: 0 auto;
   //margin-top: 32px;
   position: relative;
+
+  .voltar {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-bottom: 16px;
+
+    span {
+      color: ${({ theme }) => theme.colors.primary.main};
+      font-weight: bold;
+    }
+
+    img {
+      margin-right: 8px;
+      transform: rotate(-90deg);
+    }
+  }
 `;
 
 export const InputSearchContainer = styled.div`

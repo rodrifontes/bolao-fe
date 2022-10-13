@@ -1,3 +1,5 @@
+import { useCallback, useEffect, useState } from 'react';
+
 import { Container, Card } from './styles';
 
 import america_mg from '../../assets/images/escudos/america-mg.svg';
@@ -8,10 +10,40 @@ import avai from '../../assets/images/escudos/avai.svg';
 import botafogo from '../../assets/images/escudos/botafogo.svg';
 
 import Input from '../../components/Input';
+import Loader from '../../components/Loader';
+
+import JogoService from '../../services/JogoService';
+
+import toast from '../../utils/toast';
 
 export default function Palpite() {
+  const [jogos, setJogos] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
+  const loadJogos = useCallback(async () => {
+    try {
+      setIsLoading(true);
+
+      const jogosList = await JogoService.listJogos();
+
+      setHasError(false);
+      setJogos(jogosList);
+    } catch {
+      setHasError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadJogos();
+  }, [loadJogos]);
+
   return (
     <Container>
+      <Loader isLoading={isLoading} />
+
       <Card>
         <div className="info-partida">
           <strong>Campeonato Brasileiro 2022</strong>

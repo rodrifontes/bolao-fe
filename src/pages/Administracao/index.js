@@ -12,7 +12,7 @@ export default function Administracao() {
         <Link to="/campeonatos">
           Campeonatos
         </Link>
-        <Link to="/times">
+        <Link to="/jogos/new">
           Jogos
         </Link>
         <Link to="/times">

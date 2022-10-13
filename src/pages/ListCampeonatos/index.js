@@ -127,6 +127,11 @@ export default function ListCampeonatos() {
         <p>Esta ação não poderá ser desfeita!</p>
       </Modal>
 
+      <Link to="/administracao" className="voltar">
+        <img src={arrow} alt="Back" />
+        <span>Voltar</span>
+      </Link>
+
       {
         campeonatos.length > 0 && (
           <InputSearchContainer>

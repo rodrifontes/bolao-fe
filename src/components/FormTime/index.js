@@ -22,7 +22,7 @@ const FormTime = forwardRef(({ buttonLabel, onSubmit }, ref) => {
     getErrorMessageByFieldName
   } = useErrors();
 
-  const isFormValid = (nome && errors.length === 0);
+  const isFormValid = (nome && nomeReduzido && errors.length === 0);
 
   useImperativeHandle(ref, () => ({
     setFieldsValues: (time) => {

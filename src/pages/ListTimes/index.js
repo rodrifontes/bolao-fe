@@ -60,7 +60,7 @@ export default function ListTimes() {
 
   useEffect(() => {
     loadTimes();
-  }, [loadTimes])
+  }, [loadTimes]);
 
   function handleToggleOrderBy() {
     setOrderBy(
@@ -126,6 +126,11 @@ export default function ListTimes() {
       >
         <p>Esta ação não poderá ser desfeita!</p>
       </Modal>
+
+      <Link to="/administracao" className="voltar">
+        <img src={arrow} alt="Back" />
+        <span>Voltar</span>
+      </Link>
 
       {
         times.length > 0 && (
