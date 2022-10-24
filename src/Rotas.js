@@ -1,4 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
+
+import Login from './pages/Login';
+
 import Palpite from './pages/Palpite';
 
 import Administracao from './pages/Administracao';
@@ -26,6 +29,7 @@ export default function Rotas() {
       <Route path="/campeonatos/new" element={<NewCampeonato />} />
       <Route path="/campeonatos/edit/:id" element={<EditCampeonato />} />
       <Route path="/jogos/new" element={<NewJogo />} />
+      <Route path="/login" element={<Login />} />
     </Routes>
   );
 }

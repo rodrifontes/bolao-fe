@@ -1,6 +1,7 @@
 export default function formatDate(date) {
-  return date
-    .replace(/\D/g, '')
-    .replace(/(\d{2})(\d)/, '$1/$2')
-    .replace(/(\d{2})(\d)/, '$1/$2');
+  const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+  const diaSemana = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
+  let data = new Date(date);
+  let dataFormatada = ((diaSemana[data.getDay()] + " " + data.getDate() + " de " + meses[(data.getMonth())] + " às " + data.getHours() + ":" + ("0" + data.getMinutes()).slice(-2)));
+  return (dataFormatada);
 }

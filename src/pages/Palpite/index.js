@@ -1,16 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { Container, Card } from './styles';
+import { Container, Card, ErrorContainer } from './styles';
 
-import america_mg from '../../assets/images/escudos/america-mg.svg';
-import atletico_pr from '../../assets/images/escudos/atletico-pr.svg';
-import atletico_go from '../../assets/images/escudos/atletico-go.svg';
-import atletico_mg from '../../assets/images/escudos/atletico-mg.svg';
-import avai from '../../assets/images/escudos/avai.svg';
-import botafogo from '../../assets/images/escudos/botafogo.svg';
+import sad from '../../assets/images/sad.svg';
 
 import Input from '../../components/Input';
+import Button from '../../components/Button';
 import Loader from '../../components/Loader';
+import formatDate from '../../utils/formatDate';
 
 import JogoService from '../../services/JogoService';
 
@@ -26,9 +23,15 @@ export default function Palpite() {
       setIsLoading(true);
 
       const jogosList = await JogoService.listJogos();
+      const newList = jogosList.map((jogo) => {
+        return {
+          ...jogo,
+          data: formatDate(jogo.data),
+        }
+      });
 
       setHasError(false);
-      setJogos(jogosList);
+      setJogos(newList);
     } catch {
       setHasError(true);
     } finally {
@@ -40,50 +43,53 @@ export default function Palpite() {
     loadJogos();
   }, [loadJogos]);
 
+  function handleTryAgain() {
+    loadJogos();
+  }
+
   return (
     <Container>
       <Loader isLoading={isLoading} />
 
-      <Card>
-        <div className="info-partida">
-          <strong>Campeonato Brasileiro 2022</strong>
-          <small>Sex, 14 de Jan às 21:00</small>
-          <small>Arena da Baixada</small>
-        </div>
+      {
+        hasError && (
+          <ErrorContainer>
+            <img src={sad} alt="Sad" />
 
-        <div className="times">
-          <div className="time">
-            <span>América MG</span>
-            <img src={america_mg} alt="América MG" />
-          </div>
-          <div className="placar"><Input />x<Input /></div>
-          <div className="time">
-            <img src={atletico_pr} alt="Atlético PR" />
-            <span>Atlético PR</span>
-          </div>
-        </div>
-      </Card>
+            <div className="details">
+              <strong>Ocorreu um erro ao obter os seus jogos!</strong>
 
-      <Card>
-        <div className="info-partida">
-          <strong>Campeonato Brasileiro 2022</strong>
-          <small>Sex, 14 de Jan às 21:00</small>
-          <small>Arena da Baixada</small>
-        </div>
+              <Button type="Button" onClick={handleTryAgain}>
+                Tentar novamente
+              </Button>
+            </div>
+          </ErrorContainer>
+        )
+      }
 
-        <div className="times">
-          <div className="time">
-            <span>Atlético GO</span>
-            <img src={atletico_go} alt="Atlético GO" />
+      {jogos.map((jogo) => (
+        <Card key={jogo.id}>
+          <div className="info-partida">
+            <strong>{jogo.campeonato_nome}</strong>
+            <small>{jogo.data}</small>
+            <small>{jogo.local}</small>
           </div>
-          <div className="placar"><Input />x<Input /></div>
-          <div className="time">
-            <img src={atletico_mg} alt="Atlético MG" />
-            <span>Atlético MG</span>
-          </div>
-        </div>
-      </Card>
 
+          <div className="times">
+            <div className="time">
+              <span>{jogo.mandante_nome}</span>
+              <img src={jogo.mandante_path_escudo} alt={jogo.mandante_nome} />
+            </div>
+            <div className="placar"><Input />x<Input /></div>
+            <div className="time">
+              <img src={jogo.visitante_path_escudo} alt={jogo.visitante_nome} />
+              <span>{jogo.visitante_nome}</span>
+            </div>
+          </div>
+        </Card>
+      ))}
+
+      {/*
       <Card>
         <div className="info-partida">
           <strong>Campeonato Brasileiro 2022</strong>
@@ -110,6 +116,7 @@ export default function Palpite() {
           0 Pontos
         </div>
       </Card>
+      */}
     </Container>
   );
 }
