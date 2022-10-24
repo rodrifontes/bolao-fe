@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 
+import Header from '../../components/Header';
 import FormHeader from "../../components/FormHeader";
 import FormTime from "../../components/FormTime";
 import Loader from '../../components/Loader';
@@ -72,6 +73,8 @@ export default function EditTimes() {
 
   return (
     <>
+      <Header />
+
       <Loader isLoading={isLoading} />
 
       <FormHeader title={isLoading ? 'Carregando...' : `Editar ${timeNome}`} />

@@ -6,6 +6,10 @@ export const Container = styled.div`
   //display: flex;
   //flex-direction: column;
   //align-items: center;
+  margin: 0 auto;
+  margin-top: 32px;
+  max-width: 800px;
+  width: 100%;
 `;
 
 export const Card = styled.div`

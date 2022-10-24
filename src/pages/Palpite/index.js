@@ -12,6 +12,7 @@ import formatDate from '../../utils/formatDate';
 import JogoService from '../../services/JogoService';
 
 import toast from '../../utils/toast';
+import Header from '../../components/Header';
 
 export default function Palpite() {
   const [jogos, setJogos] = useState([]);
@@ -48,48 +49,51 @@ export default function Palpite() {
   }
 
   return (
-    <Container>
-      <Loader isLoading={isLoading} />
+    <>
+      <Header />
 
-      {
-        hasError && (
-          <ErrorContainer>
-            <img src={sad} alt="Sad" />
+      <Container>
+        <Loader isLoading={isLoading} />
 
-            <div className="details">
-              <strong>Ocorreu um erro ao obter os seus jogos!</strong>
+        {
+          hasError && (
+            <ErrorContainer>
+              <img src={sad} alt="Sad" />
 
-              <Button type="Button" onClick={handleTryAgain}>
-                Tentar novamente
-              </Button>
+              <div className="details">
+                <strong>Ocorreu um erro ao obter os seus jogos!</strong>
+
+                <Button type="Button" onClick={handleTryAgain}>
+                  Tentar novamente
+                </Button>
+              </div>
+            </ErrorContainer>
+          )
+        }
+
+        {jogos.map((jogo) => (
+          <Card key={jogo.id}>
+            <div className="info-partida">
+              <strong>{jogo.campeonato_nome}</strong>
+              <small>{jogo.data}</small>
+              <small>{jogo.local}</small>
             </div>
-          </ErrorContainer>
-        )
-      }
 
-      {jogos.map((jogo) => (
-        <Card key={jogo.id}>
-          <div className="info-partida">
-            <strong>{jogo.campeonato_nome}</strong>
-            <small>{jogo.data}</small>
-            <small>{jogo.local}</small>
-          </div>
-
-          <div className="times">
-            <div className="time">
-              <span>{jogo.mandante_nome}</span>
-              <img src={jogo.mandante_path_escudo} alt={jogo.mandante_nome} />
+            <div className="times">
+              <div className="time">
+                <span>{jogo.mandante_nome}</span>
+                <img src={jogo.mandante_path_escudo} alt={jogo.mandante_nome} />
+              </div>
+              <div className="placar"><Input />x<Input /></div>
+              <div className="time">
+                <img src={jogo.visitante_path_escudo} alt={jogo.visitante_nome} />
+                <span>{jogo.visitante_nome}</span>
+              </div>
             </div>
-            <div className="placar"><Input />x<Input /></div>
-            <div className="time">
-              <img src={jogo.visitante_path_escudo} alt={jogo.visitante_nome} />
-              <span>{jogo.visitante_nome}</span>
-            </div>
-          </div>
-        </Card>
-      ))}
+          </Card>
+        ))}
 
-      {/*
+        {/*
       <Card>
         <div className="info-partida">
           <strong>Campeonato Brasileiro 2022</strong>
@@ -117,6 +121,7 @@ export default function Palpite() {
         </div>
       </Card>
       */}
-    </Container>
+      </Container>
+    </>
   );
 }

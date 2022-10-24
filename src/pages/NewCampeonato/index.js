@@ -3,6 +3,7 @@ import FormHeader from '../../components/FormHeader';
 import FormCampeonato from '../../components/FormCampeonato';
 import CampeonatoService from '../../services/CampeonatoService';
 import toast from '../../utils/toast';
+import Header from '../../components/Header';
 
 export default function NewCampeonato() {
   const formCampeonatoRef = useRef(null);
@@ -31,6 +32,8 @@ export default function NewCampeonato() {
 
   return (
     <>
+      <Header />
+
       <FormHeader title="Novo campeonato" />
       <FormCampeonato
         ref={formCampeonatoRef}

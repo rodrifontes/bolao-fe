@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  //margin: 0 auto;
-  //margin-top: 32px;
-  position: relative;
+  margin: 0 auto;
+  margin-top: 32px;
+  max-width: 800px;
+  width: 100%;
 
   .voltar {
     display: flex;
@@ -43,7 +44,7 @@ export const InputSearchContainer = styled.div`
   }
 `;
 
-export const Header = styled.header`
+export const HeaderForm = styled.header`
   display: flex;
   align-items: center;
   justify-content: ${({ justifyContent }) => justifyContent};

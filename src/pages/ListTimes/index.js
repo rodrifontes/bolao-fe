@@ -5,7 +5,7 @@ import {
   Card,
   Container,
   InputSearchContainer,
-  Header,
+  HeaderForm,
   ListHeader,
   ErrorContainer,
   EmptyListContainer,
@@ -19,6 +19,7 @@ import sad from '../../assets/images/sad.svg';
 import emptyBox from '../../assets/images/empty-box.svg';
 import magnifierQuestion from '../../assets/images/magnifier-question.svg';
 
+import Header from '../../components/Header';
 import Loader from '../../components/Loader';
 import Button from '../../components/Button';
 import Modal from '../../components/Modal';
@@ -112,132 +113,136 @@ export default function ListTimes() {
   }
 
   return (
-    <Container>
-      <Loader isLoading={isLoading} />
+    <>
+      <Header />
 
-      <Modal
-        danger
-        isLoading={isLoadingDelete}
-        visible={isDeleteModalVisible}
-        title={`Tem certeza que deseja remover o time "${timeBeingDeleted?.nome}"?`}
-        confirmLabel="Deletar"
-        onCancel={handleCloseDeleteModal}
-        onConfirm={handleConfirmDeleteTime}
-      >
-        <p>Esta ação não poderá ser desfeita!</p>
-      </Modal>
+      <Container>
+        <Loader isLoading={isLoading} />
 
-      <Link to="/administracao" className="voltar">
-        <img src={arrow} alt="Back" />
-        <span>Voltar</span>
-      </Link>
+        <Modal
+          danger
+          isLoading={isLoadingDelete}
+          visible={isDeleteModalVisible}
+          title={`Tem certeza que deseja remover o time "${timeBeingDeleted?.nome}"?`}
+          confirmLabel="Deletar"
+          onCancel={handleCloseDeleteModal}
+          onConfirm={handleConfirmDeleteTime}
+        >
+          <p>Esta ação não poderá ser desfeita!</p>
+        </Modal>
 
-      {
-        times.length > 0 && (
-          <InputSearchContainer>
-            <input
-              value={searchTerm}
-              type="text"
-              placeholder="Pesquisar time..."
-              onChange={handleChangeSearchTerm}
-            />
-          </InputSearchContainer>
-        )
-      }
+        <Link to="/administracao" className="voltar">
+          <img src={arrow} alt="Back" />
+          <span>Voltar</span>
+        </Link>
 
-      <Header
-        justifyContent={
-          hasError
-            ? 'flex-end'
-            : (
-              times.length > 0
-                ? 'space-between'
-                : 'center'
-            )
+        {
+          times.length > 0 && (
+            <InputSearchContainer>
+              <input
+                value={searchTerm}
+                type="text"
+                placeholder="Pesquisar time..."
+                onChange={handleChangeSearchTerm}
+              />
+            </InputSearchContainer>
+          )
         }
-      >
-        {(!hasError && times.length > 0) && (
-          <strong>
-            {filteredTimes.length}
-            {filteredTimes.length === 1 ? ' time' : ' times'}
-          </strong>
-        )}
-        <Link to="new">Novo time</Link>
-      </Header>
 
-      {
-        hasError && (
-          <ErrorContainer>
-            <img src={sad} alt="Sad" />
+        <HeaderForm
+          justifyContent={
+            hasError
+              ? 'flex-end'
+              : (
+                times.length > 0
+                  ? 'space-between'
+                  : 'center'
+              )
+          }
+        >
+          {(!hasError && times.length > 0) && (
+            <strong>
+              {filteredTimes.length}
+              {filteredTimes.length === 1 ? ' time' : ' times'}
+            </strong>
+          )}
+          <Link to="new">Novo time</Link>
+        </HeaderForm>
 
-            <div className="details">
-              <strong>Ocorreu um erro ao obter os seus times!</strong>
+        {
+          hasError && (
+            <ErrorContainer>
+              <img src={sad} alt="Sad" />
 
-              <Button type="Button" onClick={handleTryAgain}>
-                Tentar novamente
-              </Button>
-            </div>
-          </ErrorContainer>
-        )
-      }
+              <div className="details">
+                <strong>Ocorreu um erro ao obter os seus times!</strong>
 
-      {
-        !hasError && (
-          <>
+                <Button type="Button" onClick={handleTryAgain}>
+                  Tentar novamente
+                </Button>
+              </div>
+            </ErrorContainer>
+          )
+        }
 
-            {(times.length < 1 && !isLoading) && (
-              <EmptyListContainer>
-                <img src={emptyBox} alt="Empty box" />
+        {
+          !hasError && (
+            <>
 
-                <p>
-                  Você ainda não tem nenhum time cadastrado!
-                  Clique no botão <strong>"Novo time"</strong> à cima
-                  para cadastrar o seu primeiro!
-                </p>
-              </EmptyListContainer>
-            )}
+              {(times.length < 1 && !isLoading) && (
+                <EmptyListContainer>
+                  <img src={emptyBox} alt="Empty box" />
 
-            {(times.length > 0 && filteredTimes.length < 1) &&
-              <SearchNotFoundContainer>
-                <img src={magnifierQuestion} alt="Magnifier Question" />
+                  <p>
+                    Você ainda não tem nenhum time cadastrado!
+                    Clique no botão <strong>"Novo time"</strong> à cima
+                    para cadastrar o seu primeiro!
+                  </p>
+                </EmptyListContainer>
+              )}
 
-                <span>
-                  Nenhum resultado foi encontrado para <strong>"{searchTerm}"</strong>
-                </span>
-              </SearchNotFoundContainer>
-            }
+              {(times.length > 0 && filteredTimes.length < 1) &&
+                <SearchNotFoundContainer>
+                  <img src={magnifierQuestion} alt="Magnifier Question" />
 
-            {filteredTimes.length > 0 && (
-              <ListHeader orderBy={orderBy}>
-                <button type="button" onClick={handleToggleOrderBy}>
-                  <span>Nome</span>
-                  <img src={arrow} alt="Arrow" />
-                </button>
-              </ListHeader>
-            )}
+                  <span>
+                    Nenhum resultado foi encontrado para <strong>"{searchTerm}"</strong>
+                  </span>
+                </SearchNotFoundContainer>
+              }
 
-            {filteredTimes.map((time) => (
-              <Card key={time.id}>
-                <div className="info">
-                  <img src={time.path_escudo} alt={time.nome} />
-                  <span>{time.nome}</span>
-                </div>
-                <div className="actions">
-                  <Link to={`/times/edit/${time.id}`}>
-                    <img src={edit} alt="Edit" />
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => handleDeleteTime(time)}
-                  >
-                    <img src={trash} alt="Delete" />
+              {filteredTimes.length > 0 && (
+                <ListHeader orderBy={orderBy}>
+                  <button type="button" onClick={handleToggleOrderBy}>
+                    <span>Nome</span>
+                    <img src={arrow} alt="Arrow" />
                   </button>
-                </div>
-              </Card>
-            ))}
-          </>
-        )
-      }
-    </Container >
+                </ListHeader>
+              )}
+
+              {filteredTimes.map((time) => (
+                <Card key={time.id}>
+                  <div className="info">
+                    <img src={time.path_escudo} alt={time.nome} />
+                    <span>{time.nome}</span>
+                  </div>
+                  <div className="actions">
+                    <Link to={`/times/edit/${time.id}`}>
+                      <img src={edit} alt="Edit" />
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteTime(time)}
+                    >
+                      <img src={trash} alt="Delete" />
+                    </button>
+                  </div>
+                </Card>
+              ))}
+            </>
+          )
+        }
+      </Container>
+    </>
   );
 }

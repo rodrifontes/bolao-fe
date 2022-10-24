@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import FormHeader from '../../components/FormHeader';
 import FormJogo from '../../components/FormJogo';
+import Header from '../../components/Header';
 import JogoService from '../../services/JogoService';
 import toast from '../../utils/toast';
 
@@ -36,6 +37,8 @@ export default function NewJogo() {
 
   return (
     <>
+      <Header />
+
       <FormHeader title="Novo Jogo" />
       <FormJogo
         ref={formJogoRef}

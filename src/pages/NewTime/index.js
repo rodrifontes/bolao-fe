@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import FormHeader from '../../components/FormHeader';
 import FormTime from '../../components/FormTime';
+import Header from '../../components/Header';
 import TimeService from '../../services/TimeService';
 import toast from '../../utils/toast';
 
@@ -33,6 +34,8 @@ export default function NewTime() {
 
   return (
     <>
+      <Header />
+
       <FormHeader title="Novo time" />
       <FormTime
         ref={formTimeRef}

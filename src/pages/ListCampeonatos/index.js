@@ -5,7 +5,7 @@ import {
   Card,
   Container,
   InputSearchContainer,
-  Header,
+  HeaderForm,
   ListHeader,
   ErrorContainer,
   EmptyListContainer,
@@ -19,6 +19,7 @@ import sad from '../../assets/images/sad.svg';
 import emptyBox from '../../assets/images/empty-box.svg';
 import magnifierQuestion from '../../assets/images/magnifier-question.svg';
 
+import Header from '../../components/Header';
 import Loader from '../../components/Loader';
 import Button from '../../components/Button';
 import Modal from '../../components/Modal';
@@ -112,131 +113,135 @@ export default function ListCampeonatos() {
   }
 
   return (
-    <Container>
-      <Loader isLoading={isLoading} />
+    <>
+      <Header />
 
-      <Modal
-        danger
-        isLoading={isLoadingDelete}
-        visible={isDeleteModalVisible}
-        title={`Tem certeza que deseja remover o campeonato "${campeonatoBeingDeleted?.nome}"?`}
-        confirmLabel="Deletar"
-        onCancel={handleCloseDeleteModal}
-        onConfirm={handleConfirmDeleteCampeonato}
-      >
-        <p>Esta ação não poderá ser desfeita!</p>
-      </Modal>
+      <Container>
+        <Loader isLoading={isLoading} />
 
-      <Link to="/administracao" className="voltar">
-        <img src={arrow} alt="Back" />
-        <span>Voltar</span>
-      </Link>
+        <Modal
+          danger
+          isLoading={isLoadingDelete}
+          visible={isDeleteModalVisible}
+          title={`Tem certeza que deseja remover o campeonato "${campeonatoBeingDeleted?.nome}"?`}
+          confirmLabel="Deletar"
+          onCancel={handleCloseDeleteModal}
+          onConfirm={handleConfirmDeleteCampeonato}
+        >
+          <p>Esta ação não poderá ser desfeita!</p>
+        </Modal>
 
-      {
-        campeonatos.length > 0 && (
-          <InputSearchContainer>
-            <input
-              value={searchTerm}
-              type="text"
-              placeholder="Pesquisar campeonato..."
-              onChange={handleChangeSearchTerm}
-            />
-          </InputSearchContainer>
-        )
-      }
+        <Link to="/administracao" className="voltar">
+          <img src={arrow} alt="Back" />
+          <span>Voltar</span>
+        </Link>
 
-      <Header
-        justifyContent={
-          hasError
-            ? 'flex-end'
-            : (
-              campeonatos.length > 0
-                ? 'space-between'
-                : 'center'
-            )
+        {
+          campeonatos.length > 0 && (
+            <InputSearchContainer>
+              <input
+                value={searchTerm}
+                type="text"
+                placeholder="Pesquisar campeonato..."
+                onChange={handleChangeSearchTerm}
+              />
+            </InputSearchContainer>
+          )
         }
-      >
-        {(!hasError && campeonatos.length > 0) && (
-          <strong>
-            {filteredCampeoantos.length}
-            {filteredCampeoantos.length === 1 ? ' campeonato' : ' campeonatos'}
-          </strong>
-        )}
-        <Link to="new">Novo campeonato</Link>
-      </Header>
 
-      {
-        hasError && (
-          <ErrorContainer>
-            <img src={sad} alt="Sad" />
+        <HeaderForm
+          justifyContent={
+            hasError
+              ? 'flex-end'
+              : (
+                campeonatos.length > 0
+                  ? 'space-between'
+                  : 'center'
+              )
+          }
+        >
+          {(!hasError && campeonatos.length > 0) && (
+            <strong>
+              {filteredCampeoantos.length}
+              {filteredCampeoantos.length === 1 ? ' campeonato' : ' campeonatos'}
+            </strong>
+          )}
+          <Link to="new">Novo campeonato</Link>
+        </HeaderForm>
 
-            <div className="details">
-              <strong>Ocorreu um erro ao obter os seus campeonatos!</strong>
+        {
+          hasError && (
+            <ErrorContainer>
+              <img src={sad} alt="Sad" />
 
-              <Button type="Button" onClick={handleTryAgain}>
-                Tentar novamente
-              </Button>
-            </div>
-          </ErrorContainer>
-        )
-      }
+              <div className="details">
+                <strong>Ocorreu um erro ao obter os seus campeonatos!</strong>
 
-      {
-        !hasError && (
-          <>
+                <Button type="Button" onClick={handleTryAgain}>
+                  Tentar novamente
+                </Button>
+              </div>
+            </ErrorContainer>
+          )
+        }
 
-            {(campeonatos.length < 1 && !isLoading) && (
-              <EmptyListContainer>
-                <img src={emptyBox} alt="Empty box" />
+        {
+          !hasError && (
+            <>
 
-                <p>
-                  Você ainda não tem nenhum campeonato cadastrado!
-                  Clique no botão <strong>"Novo campeonato"</strong> à cima
-                  para cadastrar o seu primeiro!
-                </p>
-              </EmptyListContainer>
-            )}
+              {(campeonatos.length < 1 && !isLoading) && (
+                <EmptyListContainer>
+                  <img src={emptyBox} alt="Empty box" />
 
-            {(campeonatos.length > 0 && filteredCampeoantos.length < 1) &&
-              <SearchNotFoundContainer>
-                <img src={magnifierQuestion} alt="Magnifier Question" />
+                  <p>
+                    Você ainda não tem nenhum campeonato cadastrado!
+                    Clique no botão <strong>"Novo campeonato"</strong> à cima
+                    para cadastrar o seu primeiro!
+                  </p>
+                </EmptyListContainer>
+              )}
 
-                <span>
-                  Nenhum resultado foi encontrado para <strong>"{searchTerm}"</strong>
-                </span>
-              </SearchNotFoundContainer>
-            }
+              {(campeonatos.length > 0 && filteredCampeoantos.length < 1) &&
+                <SearchNotFoundContainer>
+                  <img src={magnifierQuestion} alt="Magnifier Question" />
 
-            {filteredCampeoantos.length > 0 && (
-              <ListHeader orderBy={orderBy}>
-                <button type="button" onClick={handleToggleOrderBy}>
-                  <span>Nome</span>
-                  <img src={arrow} alt="Arrow" />
-                </button>
-              </ListHeader>
-            )}
+                  <span>
+                    Nenhum resultado foi encontrado para <strong>"{searchTerm}"</strong>
+                  </span>
+                </SearchNotFoundContainer>
+              }
 
-            {filteredCampeoantos.map((campeonato) => (
-              <Card key={campeonato.id}>
-                <div className="info">
-                  <span>{campeonato.nome}</span>
-                </div>
-                <div className="actions">
-                  <Link to={`/campeonatos/edit/${campeonato.id}`}>
-                    <img src={edit} alt="Edit" />
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => handleDeleteCampeonato(campeonato)}
-                  >
-                    <img src={trash} alt="Delete" />
+              {filteredCampeoantos.length > 0 && (
+                <ListHeader orderBy={orderBy}>
+                  <button type="button" onClick={handleToggleOrderBy}>
+                    <span>Nome</span>
+                    <img src={arrow} alt="Arrow" />
                   </button>
-                </div>
-              </Card>
-            ))}
-          </>
-        )
-      }
-    </Container >
+                </ListHeader>
+              )}
+
+              {filteredCampeoantos.map((campeonato) => (
+                <Card key={campeonato.id}>
+                  <div className="info">
+                    <span>{campeonato.nome}</span>
+                  </div>
+                  <div className="actions">
+                    <Link to={`/campeonatos/edit/${campeonato.id}`}>
+                      <img src={edit} alt="Edit" />
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteCampeonato(campeonato)}
+                    >
+                      <img src={trash} alt="Delete" />
+                    </button>
+                  </div>
+                </Card>
+              ))}
+            </>
+          )
+        }
+      </Container>
+    </>
   );
 }

@@ -19,10 +19,7 @@ function App() {
         <ToastContainer />
 
         <Container>
-          <Header />
-          <Body>
-            <Rotas />
-          </Body>
+          <Rotas />
         </Container>
       </ThemeProvider>
     </BrowserRouter>
