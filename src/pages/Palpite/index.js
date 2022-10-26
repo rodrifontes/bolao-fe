@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { Container, Card, ErrorContainer } from './styles';
+import { Body, Card, ErrorContainer } from './styles';
 
 import sad from '../../assets/images/sad.svg';
 
@@ -52,7 +52,7 @@ export default function Palpite() {
     <>
       <Header />
 
-      <Container>
+      <Body>
         <Loader isLoading={isLoading} />
 
         {
@@ -121,7 +121,7 @@ export default function Palpite() {
         </div>
       </Card>
       */}
-      </Container>
+      </Body>
     </>
   );
 }
