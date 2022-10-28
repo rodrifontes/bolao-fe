@@ -87,7 +87,7 @@ export default function Login() {
             <Link to="/recuperar-senha">Recuperar senha</Link>
           </p>
           <p>
-            Não é cadastrado? <Link to="/cadastro">Cadastre-se</Link>
+            Não é cadastrado? <Link to="/cadastro-usuario">Cadastre-se</Link>
           </p>
         </FormContent>
       </Form>

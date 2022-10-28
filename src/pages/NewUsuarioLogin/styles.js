@@ -12,7 +12,7 @@ export const Container = styled.div`
   background-size: cover;
 `;
 
-export const Form = styled.form`
+export const ContainerForm = styled.div`
   width: 100%;
   max-width: 420px;
   box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
