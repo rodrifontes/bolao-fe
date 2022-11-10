@@ -45,6 +45,11 @@ class HttpClient {
       headers.append('Content-Type', 'application/json');
     }
 
+    const token = sessionStorage.getItem('token')
+    if (token && options.headers) {
+        options.headers.Authorization = `Bearer ${token}`
+    }
+
     if (options.headers) {
       //Object.keys(options.headers).forEach((name) => {
       //  headers.append(name, options.headers[name]);
@@ -76,7 +81,7 @@ class HttpClient {
 
     // Optional Chaining
     // null ou undefined
-    throw new APIError(response, options.body);
+    throw new APIError(response, responseBody);
   }
 }
 

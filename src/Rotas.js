@@ -21,7 +21,7 @@ import NewJogo from './pages/NewJogo';
 export default function Rotas() {
   return (
     <Routes>
-      <Route path="/" element={<Palpite />} />
+      <Route path="/" element={<Login />} />
       <Route path="/palpite" element={<Palpite />} />
       <Route path="/administracao" element={<Administracao />} />
       <Route path="/times" element={<ListTimes />} />

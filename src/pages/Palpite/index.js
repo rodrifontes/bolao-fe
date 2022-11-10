@@ -15,6 +15,7 @@ import toast from '../../utils/toast';
 import Header from '../../components/Header';
 
 export default function Palpite() {
+
   const [jogos, setJogos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);

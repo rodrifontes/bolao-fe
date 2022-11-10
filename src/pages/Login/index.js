@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import MD5 from "crypto-js/md5";
 
 import isEmailValid from '../../utils/isEmailValid';
 
@@ -10,9 +12,18 @@ import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
 import { ButtonContainer } from '../../components/FormTime/styles';
 import Button from '../../components/Button';
-import { Link } from 'react-router-dom';
+
+import UsuarioService from '../../services/UsuarioService';
+
+import toast from '../../utils/toast';
 
 export default function Login() {
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (sessionStorage.getItem('token')) navigate('/palpite');
+  }, [navigate]);
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -47,9 +58,33 @@ export default function Login() {
     }
   }
 
+  async function handleSubmit(event) {
+    try {
+      event.preventDefault();
+
+      setIsSubmitting(true);
+
+      const { access_token } = await UsuarioService.login({
+        email,
+        senha: MD5(senha).toString(),
+      });
+
+      sessionStorage.setItem('token', access_token);
+
+      navigate('/palpite');
+
+    } catch (error) {
+      toast({
+        type: 'danger',
+        text: error.message,
+      });
+      setIsSubmitting(false);
+    }
+  }
+
   return (
     <Container>
-      <Form>
+      <Form onSubmit={handleSubmit} noValidate>
         <FormContent>
           <h3>Login</h3>
           <FormGroup error={getErrorMessageByFieldName('email')}>

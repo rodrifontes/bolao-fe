@@ -18,12 +18,16 @@ class UsuarioService {
     return this.httpClient.post('/usuarios', { body: usuario });
   }
 
-  updateTime(id, usuario) {
+  updateUsuario(id, usuario) {
     return this.httpClient.put(`/usuarios/${id}`, { body: usuario });
   }
 
   deleteUsuario(id) {
     return this.httpClient.delete(`/usuarios/${id}`);
+  }
+
+  login(usuario) {
+    return this.httpClient.post('/login', { body: usuario });
   }
 
 }

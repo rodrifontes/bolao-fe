@@ -32,10 +32,10 @@ export default function NewUsuarioLogin() {
         type: 'sucess',
         text: 'Usuário Cadastrado com sucesso!',
       });
-    } catch {
+    } catch (error) {
       toast({
         type: 'danger',
-        text: `Ocorreu um erro ao cadastrar o usuário!`,
+        text: error.message,
       });
     }
   }
