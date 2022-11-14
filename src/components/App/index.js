@@ -10,6 +10,8 @@ import { Container } from './styles';
 
 import ToastContainer from '../Toast/ToastContainer';
 
+import { AuthProvider } from '../../context/AuthContext';
+
 function App() {
   return (
     <BrowserRouter>
@@ -18,7 +20,9 @@ function App() {
         <ToastContainer />
 
         <Container>
-          <Rotas />
+          <AuthProvider>
+            <Rotas />
+          </AuthProvider>
         </Container>
       </ThemeProvider>
     </BrowserRouter>

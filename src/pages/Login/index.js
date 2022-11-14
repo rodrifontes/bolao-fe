@@ -6,7 +6,7 @@ import isEmailValid from '../../utils/isEmailValid';
 
 import useErrors from '../../hooks/useErrors';
 
-import { Container, Copyright, Form, FormContent } from './styles';
+import { Container, Form, FormContent } from './styles';
 
 import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
@@ -64,12 +64,13 @@ export default function Login() {
 
       setIsSubmitting(true);
 
-      const { access_token } = await UsuarioService.login({
+      const { access_token, user } = await UsuarioService.login({
         email,
         senha: MD5(senha).toString(),
       });
 
       sessionStorage.setItem('token', access_token);
+      sessionStorage.setItem('user', user);
 
       navigate('/palpite');
 

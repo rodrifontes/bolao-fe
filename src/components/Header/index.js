@@ -1,10 +1,21 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Container, Menu, BtnHeader } from './styles';
 
 import logo from '../../assets/images/logo.svg';
 
+import useAuth from "../../hooks/useAuth";
+
 export default function Header() {
+
+  let navigate = useNavigate();
+  const auth = useAuth();
+
+  function logout() {
+    auth.logout();
+    navigate('/');
+  }
+
   return (
     <Container>
       <img src={logo} alt="BolãoRFC" />
@@ -17,7 +28,12 @@ export default function Header() {
         <Link to="/administracao" > Admin </Link>
       </BtnHeader>
       <BtnHeader>
-        <Link to="#"> Sair </Link>
+        <Link
+          to={'..'}
+          onClick={logout}
+        >
+          Sair
+        </Link>
       </BtnHeader>
     </Container>
   );

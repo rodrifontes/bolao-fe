@@ -4,7 +4,7 @@ import isEmailValid from '../../utils/isEmailValid';
 
 import useErrors from '../../hooks/useErrors';
 
-import { Container, Copyright, Form, FormContent } from './styles';
+import { Container, Form, FormContent } from './styles';
 
 import FormGroup from '../../components/FormGroup';
 import Input from '../../components/Input';
@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 export default function Login() {
 
   const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting] = useState(false);
 
   const {
     errors,

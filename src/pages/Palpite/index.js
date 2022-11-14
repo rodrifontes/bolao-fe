@@ -11,7 +11,6 @@ import formatDate from '../../utils/formatDate';
 
 import JogoService from '../../services/JogoService';
 
-import toast from '../../utils/toast';
 import Header from '../../components/Header';
 
 export default function Palpite() {

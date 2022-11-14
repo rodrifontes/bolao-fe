@@ -45,9 +45,9 @@ class HttpClient {
       headers.append('Content-Type', 'application/json');
     }
 
-    const token = sessionStorage.getItem('token')
-    if (token && options.headers) {
-        options.headers.Authorization = `Bearer ${token}`
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      headers.append('Authorization', `Bearer ${token}`);
     }
 
     if (options.headers) {
