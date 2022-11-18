@@ -2,7 +2,7 @@ import HttpClient from './utils/HttpClient';
 
 class FaseService {
   constructor() {
-    this.httpClient = new HttpClient('http://localhost:3001');
+    this.httpClient = new HttpClient('process.env.BASE_URL_API');
   }
 
   listFases() {

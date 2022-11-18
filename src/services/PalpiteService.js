@@ -3,7 +3,7 @@ import HttpClient from './utils/HttpClient';
 class PalpiteService {
 
   constructor() {
-    this.httpClient = new HttpClient('http://192.168.0.17:3001');
+    this.httpClient = new HttpClient('process.env.BASE_URL_API');
   }
 
   listJogos(orderBy = 'asc', userId) {

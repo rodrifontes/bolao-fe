@@ -3,7 +3,7 @@ import HttpClient from './utils/HttpClient';
 class TimeService {
 
   constructor() {
-    this.httpClient = new HttpClient('http://localhost:3001');
+    this.httpClient = new HttpClient('process.env.BASE_URL_API');
   }
 
   listTimes(orderBy = 'asc') {
