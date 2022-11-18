@@ -15,6 +15,9 @@ export const Container = styled.div`
 export const Form = styled.form`
   width: 100%;
   max-width: 420px;
+  @media(max-width: 800px) {
+    max-width: 350px;
+  }
   box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
   padding-top: 30px;
   padding-bottom: 20px;

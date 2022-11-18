@@ -45,7 +45,7 @@ export default function EditTimes() {
     }
 
     loadTime();
-  }, [id, safeAsyncAction])
+  }, [id, safeAsyncAction, history])
 
   async function handleSubmit(formData) {
     try {

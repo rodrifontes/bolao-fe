@@ -1,29 +1,34 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { Body, Card, ErrorContainer } from './styles';
+import { Body, ErrorContainer } from './styles';
 
 import sad from '../../assets/images/sad.svg';
 
-import Input from '../../components/Input';
 import Button from '../../components/Button';
 import Loader from '../../components/Loader';
 import formatDate from '../../utils/formatDate';
+import Placar from '../../components/Placar';
 
-import JogoService from '../../services/JogoService';
+import PalpiteService from '../../services/PalpiteService';
 
 import Header from '../../components/Header';
+import useAuth from '../../hooks/useAuth';
 
 export default function Palpite() {
 
   const [jogos, setJogos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const { user } = useAuth();
+
+  console.log('Palpite;')
 
   const loadJogos = useCallback(async () => {
     try {
       setIsLoading(true);
 
-      const jogosList = await JogoService.listJogos();
+      if(!user.id) return;
+      const jogosList = await PalpiteService.listJogos('asc', user.id);
       const newList = jogosList.map((jogo) => {
         return {
           ...jogo,
@@ -38,7 +43,7 @@ export default function Palpite() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [user.id]);
 
   useEffect(() => {
     loadJogos();
@@ -46,6 +51,17 @@ export default function Palpite() {
 
   function handleTryAgain() {
     loadJogos();
+  }
+
+  async function handleSubmitPalpite(formData) {
+    const palpite = {
+      usuario_id: user.id,
+      jogo_id: formData.jogoId,
+      placar_mandante: formData.placarMandante,
+      placar_visitante: formData.placarVisitante,
+    };
+
+    await PalpiteService.createPalpite(palpite);
   }
 
   return (
@@ -72,55 +88,13 @@ export default function Palpite() {
         }
 
         {jogos.map((jogo) => (
-          <Card key={jogo.id}>
-            <div className="info-partida">
-              <strong>{jogo.campeonato_nome}</strong>
-              <small>{jogo.data}</small>
-              <small>{jogo.local}</small>
-            </div>
-
-            <div className="times">
-              <div className="time">
-                <span>{jogo.mandante_nome}</span>
-                <img src={jogo.mandante_path_escudo} alt={jogo.mandante_nome} />
-              </div>
-              <div className="placar"><Input />x<Input /></div>
-              <div className="time">
-                <img src={jogo.visitante_path_escudo} alt={jogo.visitante_nome} />
-                <span>{jogo.visitante_nome}</span>
-              </div>
-            </div>
-          </Card>
+          <Placar
+            key={jogo.id}
+            jogo={jogo}
+            onSubmit={handleSubmitPalpite}
+          />
         ))}
 
-        {/*
-      <Card>
-        <div className="info-partida">
-          <strong>Campeonato Brasileiro 2022</strong>
-          <small>Sex, 14 de Jan às 21:00</small>
-          <small>Arena da Baixada</small>
-        </div>
-
-        <div className="times">
-          <div className="time">
-            <span>Avaí</span>
-            <img src={avai} alt="Avaí" />
-          </div>
-          <div className="resultado">
-            <span className="resultado_jogo">2 x 1</span>
-            <span className="palpite">(1 x 1)</span>
-          </div>
-          <div className="time">
-            <img src={botafogo} alt="Botafogo" />
-            <span>Botafogo</span>
-          </div>
-        </div>
-
-        <div className="pontuacao">
-          0 Pontos
-        </div>
-      </Card>
-      */}
       </Body>
     </>
   );

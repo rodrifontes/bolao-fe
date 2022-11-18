@@ -17,23 +17,29 @@ import NewCampeonato from './pages/NewCampeonato';
 import EditCampeonato from './pages/EditCampeonato';
 
 import NewJogo from './pages/NewJogo';
+import useAuth from './hooks/useAuth';
+import Regulamento from './pages/Regulamento';
 
 export default function Rotas() {
+
+  const { isLogged } = useAuth();
+
   return (
     <Routes>
       <Route path="/" element={<Login />} />
-      <Route path="/palpite" element={<Palpite />} />
-      <Route path="/administracao" element={<Administracao />} />
-      <Route path="/times" element={<ListTimes />} />
-      <Route path="/times/new" element={<NewTime />} />
-      <Route path="/times/edit/:id" element={<EditTime />} />
-      <Route path="/campeonatos" element={<ListCampeonatos />} />
-      <Route path="/campeonatos/new" element={<NewCampeonato />} />
-      <Route path="/campeonatos/edit/:id" element={<EditCampeonato />} />
-      <Route path="/jogos/new" element={<NewJogo />} />
       <Route path="/login" element={<Login />} />
       <Route path="/cadastro-usuario" element={<NewUsuarioLogin />} />
       <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+      <Route path="/palpite" element={isLogged ? <Palpite /> : <Login />} />
+      <Route path="/administracao" element={isLogged ? <Administracao /> : <Login />} />
+      <Route path="/times" element={isLogged ? <ListTimes /> : <Login />} />
+      <Route path="/times/new" element={isLogged ? <NewTime /> : <Login />} />
+      <Route path="/times/edit/:id" element={isLogged ? <EditTime /> : <Login />} />
+      <Route path="/campeonatos" element={isLogged ? <ListCampeonatos /> : <Login />} />
+      <Route path="/campeonatos/new" element={isLogged ? <NewCampeonato /> : <Login />} />
+      <Route path="/campeonatos/edit/:id" element={isLogged ? <EditCampeonato /> : <Login />} />
+      <Route path="/jogos/new" element={isLogged ? <NewJogo /> : <Login />} />
+      <Route path="/regulamento" element={isLogged ? <Regulamento /> : <Login />} />
     </Routes>
   );
 }

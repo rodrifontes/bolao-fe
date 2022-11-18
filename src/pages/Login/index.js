@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import MD5 from "crypto-js/md5";
 
 import isEmailValid from '../../utils/isEmailValid';
+import useAuth from '../../hooks/useAuth';
 
 import useErrors from '../../hooks/useErrors';
 
@@ -20,10 +21,13 @@ import toast from '../../utils/toast';
 export default function Login() {
 
   const navigate = useNavigate();
+  const auth = useAuth();
 
+  /*
   useEffect(() => {
-    if (sessionStorage.getItem('token')) navigate('/palpite');
-  }, [navigate]);
+    if (auth.token) navigate('/palpite');
+  }, [auth.token, navigate]);
+  */
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -64,16 +68,9 @@ export default function Login() {
 
       setIsSubmitting(true);
 
-      const { access_token, user } = await UsuarioService.login({
-        email,
-        senha: MD5(senha).toString(),
-      });
-
-      sessionStorage.setItem('token', access_token);
-      sessionStorage.setItem('user', user);
+      await auth.login(email, senha);
 
       navigate('/palpite');
-
     } catch (error) {
       toast({
         type: 'danger',

@@ -22,11 +22,13 @@ export default function Header() {
       <Menu>
         <Link to="/palpite">Palpites</Link>
         <Link to="#">Ranking</Link>
-        <Link to="#">Regulamentos</Link>
+        <Link to="/regulamento">Regulamentos</Link>
       </Menu>
-      <BtnHeader primary>
-        <Link to="/administracao" > Admin </Link>
-      </BtnHeader>
+      {auth.user.id === '98bf6c0f-5609-4f7e-ae65-edfbdedadcae' && (
+        <BtnHeader primary>
+          <Link to="/administracao" > Admin </Link>
+        </BtnHeader>
+      )}
       <BtnHeader>
         <Link
           to={'..'}
