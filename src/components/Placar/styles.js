@@ -49,6 +49,19 @@ export const Card = styled.div`
     span {
       text-align: center;
     }
+
+    .nome {
+      @media(max-width: 800px) {
+        display: none;
+      }
+    }
+
+    .nome_reduzido {
+      text-transform: uppercase;
+      @media(min-width: 800px) {
+        display: none;
+      }
+    }
   }
 
   .placar {

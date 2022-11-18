@@ -52,7 +52,8 @@ export default function Placar({ jogo, onSubmit }) {
 
       <div className="times">
         <div className="time">
-          <span>{jogo.mandante_nome}</span>
+          <span className='nome'>{jogo.mandante_nome}</span>
+          <span className='nome_reduzido'>{jogo.mandante_nome_reduzido}</span>
           <img src={jogo.mandante_path_escudo} alt={jogo.mandante_nome} />
         </div>
 
@@ -79,7 +80,8 @@ export default function Placar({ jogo, onSubmit }) {
 
         <div className="time">
           <img src={jogo.visitante_path_escudo} alt={jogo.visitante_nome} />
-          <span>{jogo.visitante_nome}</span>
+          <span className='nome'>{jogo.visitante_nome}</span>
+          <span className='nome_reduzido'>{jogo.visitante_nome_reduzido}</span>
         </div>
       </div>
 

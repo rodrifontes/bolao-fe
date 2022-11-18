@@ -3,7 +3,7 @@ import HttpClient from './utils/HttpClient';
 class PalpiteService {
 
   constructor() {
-    this.httpClient = new HttpClient('process.env.REACT_APP_BASE_URL_API');
+    this.httpClient = new HttpClient(process.env.REACT_APP_BASE_URL_API);
   }
 
   listJogos(orderBy = 'asc', userId) {

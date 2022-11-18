@@ -24,7 +24,7 @@ export default function Header() {
         <Link to="#">Ranking</Link>
         <Link to="/regulamento">Regulamentos</Link>
       </Menu>
-      {auth.user.id === '98bf6c0f-5609-4f7e-ae65-edfbdedadcae' && (
+      {auth.user.email === 'rodrifontes@gmail.com' && (
         <BtnHeader primary>
           <Link to="/administracao" > Admin </Link>
         </BtnHeader>

@@ -27,8 +27,8 @@ export default function Palpite() {
     try {
       setIsLoading(true);
 
-      if(!user.id) return;
       const jogosList = await PalpiteService.listJogos('asc', user.id);
+      console.log(jogosList)
       const newList = jogosList.map((jogo) => {
         return {
           ...jogo,
