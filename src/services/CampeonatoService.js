@@ -3,7 +3,7 @@ import HttpClient from './utils/HttpClient';
 class CampeonatoService {
 
   constructor() {
-    this.httpClient = new HttpClient('process.env.BASE_URL_API');
+    this.httpClient = new HttpClient('process.env.REACT_APP_BASE_URL_API');
   }
 
   listCampeonatos(orderBy = 'asc') {
