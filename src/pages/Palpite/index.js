@@ -6,7 +6,6 @@ import sad from '../../assets/images/sad.svg';
 
 import Button from '../../components/Button';
 import Loader from '../../components/Loader';
-import formatDate from '../../utils/formatDate';
 import Placar from '../../components/Placar';
 
 import PalpiteService from '../../services/PalpiteService';
@@ -21,19 +20,14 @@ export default function Palpite() {
   const [hasError, setHasError] = useState(false);
   const { user } = useAuth();
 
-  console.log('Palpite;')
-
   const loadJogos = useCallback(async () => {
     try {
       setIsLoading(true);
 
       const jogosList = await PalpiteService.listJogos('asc', user.id);
-      console.log(jogosList)
+
       const newList = jogosList.map((jogo) => {
-        return {
-          ...jogo,
-          data: formatDate(jogo.data),
-        }
+        return jogo;
       });
 
       setHasError(false);

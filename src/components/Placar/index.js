@@ -2,25 +2,35 @@ import { useState } from 'react';
 import delay from '../../utils/delay';
 import Input from '../Input';
 import { Card } from './styles';
+import formatDate from '../../utils/formatDate';
 
 export default function Placar({ jogo, onSubmit }) {
 
   const [placarMandante, setPlacarMandante] = useState(jogo.palpite_placar_mandante ?? '');
   const [placarVisitante, setPlacarVisitante] = useState(jogo.palpite_placar_visitante ?? '');
   const [jogoId] = useState(jogo.id);
+  const [apostaLiberada, setApostaLiberada] = useState(isApostaLiberada);
   const [message, setMessage] = useState();
 
   function handlePlacarMandante(event) {
-    setPlacarMandante(event.target.value);
-    if (event.target.value && placarVisitante) {
-      palpitar(event.target.value, placarVisitante);
+    if (isApostaLiberada()) {
+      setPlacarMandante(event.target.value);
+      if (event.target.value && placarVisitante) {
+        palpitar(event.target.value, placarVisitante);
+      }
+    } else {
+      setApostaLiberada(false);
     }
   }
 
   function handlePlacarVisitante(event) {
-    setPlacarVisitante(event.target.value);
-    if (placarMandante && event.target.value) {
-      palpitar(placarMandante, event.target.value);
+    if (isApostaLiberada()) {
+      setPlacarVisitante(event.target.value);
+      if (placarMandante && event.target.value) {
+        palpitar(placarMandante, event.target.value);
+      }
+    } else {
+      setApostaLiberada(false);
     }
   }
 
@@ -42,11 +52,21 @@ export default function Placar({ jogo, onSubmit }) {
     }
   }
 
+  function isApostaLiberada() {
+    const dataJogo = new Date(jogo.data);
+    const dataLimitePalpite = new Date(dataJogo.setMinutes(dataJogo.getMinutes() - 30));
+    const dataAtual = new Date();
+    if (dataLimitePalpite > dataAtual)
+      return true;
+    else
+      return false;
+  }
+
   return (
     <Card>
       <div className="info-partida">
         <strong>{jogo.campeonato_nome}</strong>
-        <small>{jogo.data}</small>
+        <small>{formatDate(jogo.data)}</small>
         <small>{jogo.local}</small>
       </div>
 
@@ -57,7 +77,7 @@ export default function Placar({ jogo, onSubmit }) {
           <img src={jogo.mandante_path_escudo} alt={jogo.mandante_nome} />
         </div>
 
-        {(!jogo.gols_mandante && !jogo.gols_visitante) && (
+        {apostaLiberada && (
           <div className="placar">
             <Input
               value={placarMandante}
@@ -71,7 +91,7 @@ export default function Placar({ jogo, onSubmit }) {
           </div>
         )}
 
-        {(jogo.gols_mandante && jogo.gols_visitante) && (
+        {!apostaLiberada && (
           <div className="resultado">
             <span className="resultado_jogo">{jogo.gols_mandante} x {jogo.gols_visitante}</span>
             <span className="palpite">({placarMandante} x {placarVisitante})</span>

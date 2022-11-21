@@ -22,7 +22,7 @@ export default function Header() {
       <Menu>
         <Link to="/palpite">Palpites</Link>
         <Link to="#">Ranking</Link>
-        <Link to="/regulamento">Regulamentos</Link>
+        <Link to="/regulamento">Regulamento</Link>
       </Menu>
       {auth.user.email === 'rodrifontes@gmail.com' && (
         <BtnHeader primary>
