@@ -15,7 +15,7 @@ export default function Administracao() {
           <Link to="/campeonatos">
             Campeonatos
           </Link>
-          <Link to="/jogos/new">
+          <Link to="/jogos">
             Jogos
           </Link>
           <Link to="/times">

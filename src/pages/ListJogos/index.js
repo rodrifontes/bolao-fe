@@ -1,30 +1,30 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { Container, ErrorContainer } from './styles';
+import { Container, ErrorContainer, HeaderForm } from './styles';
 
+import arrow from '../../assets/images/icons/arrow.svg';
 import sad from '../../assets/images/sad.svg';
 
 import Button from '../../components/Button';
 import Loader from '../../components/Loader';
-import Placar from '../../components/Placar';
+import FormResultado from '../../components/FormResultado';
 
-import PalpiteService from '../../services/PalpiteService';
+import JogoService from '../../services/JogoService';
 
 import Header from '../../components/Header';
-import useAuth from '../../hooks/useAuth';
+import { Link } from 'react-router-dom';
 
-export default function Palpite() {
+export default function ListJogos() {
 
   const [jogos, setJogos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const { user } = useAuth();
 
   const loadJogos = useCallback(async () => {
     try {
       setIsLoading(true);
 
-      const jogosList = await PalpiteService.listJogos('asc', user.id);
+      const jogosList = await JogoService.listJogos('asc');
 
       const newList = jogosList.map((jogo) => {
         return jogo;
@@ -37,7 +37,7 @@ export default function Palpite() {
     } finally {
       setIsLoading(false);
     }
-  }, [user.id]);
+  }, []);
 
   useEffect(() => {
     loadJogos();
@@ -47,15 +47,13 @@ export default function Palpite() {
     loadJogos();
   }
 
-  async function handleSubmitPalpite(formData) {
-    const palpite = {
-      usuario_id: user.id,
-      jogo_id: formData.jogoId,
-      placar_mandante: formData.placarMandante,
-      placar_visitante: formData.placarVisitante,
+  async function handleSubmitResultado(formData) {
+    const resultado = {
+      gols_mandante: formData.golsMandante,
+      gols_visitante: formData.golsVisitante,
     };
 
-    await PalpiteService.createPalpite(palpite);
+    await JogoService.updateResultado(formData.jogoId, resultado);
   }
 
   return (
@@ -64,6 +62,15 @@ export default function Palpite() {
 
       <Container>
         <Loader isLoading={isLoading} />
+
+        <Link to="/administracao" className="voltar">
+          <img src={arrow} alt="Back" />
+          <span>Voltar</span>
+        </Link>
+
+        <HeaderForm>
+          <Link to="new">Novo jogo</Link>
+        </HeaderForm>
 
         {
           hasError && (
@@ -82,10 +89,10 @@ export default function Palpite() {
         }
 
         {jogos.map((jogo) => (
-          <Placar
+          <FormResultado
             key={jogo.id}
             jogo={jogo}
-            onSubmit={handleSubmitPalpite}
+            onSubmit={handleSubmitResultado}
           />
         ))}
 

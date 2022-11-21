@@ -92,14 +92,8 @@ export const Card = styled.div`
     }
 
     .resultado_jogo {
-      font-size: 14px;
+      font-size: 16px;
     }
-  }
-
-  .pontuacao {
-    margin-top: 16px;
-    text-align: center;
-    font-weight: bold;
   }
 
   .mensagem {

@@ -93,8 +93,8 @@ export default function Placar({ jogo, onSubmit }) {
 
         {!apostaLiberada && (
           <div className="resultado">
-            <span className="resultado_jogo">{jogo.gols_mandante} x {jogo.gols_visitante}</span>
-            <span className="palpite">({placarMandante} x {placarVisitante})</span>
+            <span className="palpite">{placarMandante} x {placarVisitante}</span>
+            <span className="resultado_jogo">Final: {jogo.gols_mandante} x {jogo.gols_visitante}</span>
           </div>
         )}
 
@@ -105,12 +105,12 @@ export default function Placar({ jogo, onSubmit }) {
         </div>
       </div>
 
-      {(jogo.gols_mandante && jogo.gols_visitante) && (
-        <div className="pontuacao">0 Pontos</div>
-      )}
+      {/*(jogo.gols_mandante && jogo.gols_visitante) && (
+        <div className="pontuacao">2 Pontos</div>
+      )*/}
 
       {(message) && (
-        <div className="pontuacao">{message}</div>
+        <div className="mensagem">{message}</div>
       )}
     </Card>
   );

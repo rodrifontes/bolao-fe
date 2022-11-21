@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import useAuth from './hooks/useAuth';
 
 import Login from './pages/Login';
 import RecuperarSenha from './pages/RecuperarSenha';
@@ -16,8 +17,9 @@ import ListCampeonatos from './pages/ListCampeonatos';
 import NewCampeonato from './pages/NewCampeonato';
 import EditCampeonato from './pages/EditCampeonato';
 
+import ListJogos from './pages/ListJogos';
 import NewJogo from './pages/NewJogo';
-import useAuth from './hooks/useAuth';
+
 import Regulamento from './pages/Regulamento';
 
 export default function Rotas() {
@@ -38,6 +40,7 @@ export default function Rotas() {
       <Route path="/campeonatos" element={isLogged ? <ListCampeonatos /> : <Login />} />
       <Route path="/campeonatos/new" element={isLogged ? <NewCampeonato /> : <Login />} />
       <Route path="/campeonatos/edit/:id" element={isLogged ? <EditCampeonato /> : <Login />} />
+      <Route path="/jogos" element={isLogged ? <ListJogos /> : <Login />} />
       <Route path="/jogos/new" element={isLogged ? <NewJogo /> : <Login />} />
       <Route path="/regulamento" element={isLogged ? <Regulamento /> : <Login />} />
     </Routes>

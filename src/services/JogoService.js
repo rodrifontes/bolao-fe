@@ -18,8 +18,9 @@ class JogoService {
     return this.httpClient.post('/jogos', { body: jogo });
   }
 
-  updateTime(id, time) {
-    return this.httpClient.put(`/jogos/${id}`, { body: time });
+  updateResultado(id, resultado) {
+    console.log(id, resultado)
+    return this.httpClient.put(`/jogos/resultado/${id}`, { body: resultado });
   }
 
   deleteJogo(id) {
