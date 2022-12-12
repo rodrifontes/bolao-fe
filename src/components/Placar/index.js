@@ -6,8 +6,8 @@ import formatDate from '../../utils/formatDate';
 
 export default function Placar({ jogo, onSubmit }) {
 
-  const [placarMandante, setPlacarMandante] = useState(jogo.palpite_placar_mandante ?? '');
-  const [placarVisitante, setPlacarVisitante] = useState(jogo.palpite_placar_visitante ?? '');
+  const [placarMandante, setPlacarMandante] = useState(jogo.mandante.palpite ?? '');
+  const [placarVisitante, setPlacarVisitante] = useState(jogo.visitante.palpite ?? '');
   const [jogoId] = useState(jogo.id);
   const [apostaLiberada, setApostaLiberada] = useState(isApostaLiberada);
   const [message, setMessage] = useState();
@@ -65,16 +65,16 @@ export default function Placar({ jogo, onSubmit }) {
   return (
     <Card>
       <div className="info-partida">
-        <strong>{jogo.campeonato_nome}</strong>
+        <strong>{jogo.campeonato.nome}</strong>
         <small>{formatDate(jogo.data)}</small>
         <small>{jogo.local}</small>
       </div>
 
       <div className="times">
         <div className="time">
-          <span className='nome'>{jogo.mandante_nome}</span>
-          <span className='nome_reduzido'>{jogo.mandante_nome_reduzido}</span>
-          <img src={jogo.mandante_path_escudo} alt={jogo.mandante_nome} />
+          <span className='nome'>{jogo.mandante.nome}</span>
+          <span className='nome_reduzido'>{jogo.mandante.nomeReduzido}</span>
+          <img src={jogo.mandante.pathEscudo} alt={jogo.mandante.nome} />
         </div>
 
         {apostaLiberada && (
@@ -94,14 +94,14 @@ export default function Placar({ jogo, onSubmit }) {
         {!apostaLiberada && (
           <div className="resultado">
             <span className="palpite">{placarMandante} x {placarVisitante}</span>
-            <span className="resultado_jogo">Final: {jogo.gols_mandante} x {jogo.gols_visitante}</span>
+            <span className="resultado_jogo">Final: {jogo.mandante.gols} x {jogo.visitante.gols}</span>
           </div>
         )}
 
         <div className="time">
-          <img src={jogo.visitante_path_escudo} alt={jogo.visitante_nome} />
-          <span className='nome'>{jogo.visitante_nome}</span>
-          <span className='nome_reduzido'>{jogo.visitante_nome_reduzido}</span>
+          <img src={jogo.visitante.pathEscudo} alt={jogo.visitante.nome} />
+          <span className='nome'>{jogo.visitante.nome}</span>
+          <span className='nome_reduzido'>{jogo.visitante.nomeReduzido}</span>
         </div>
       </div>
 

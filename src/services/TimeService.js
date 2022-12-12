@@ -1,4 +1,5 @@
 import HttpClient from './utils/HttpClient';
+import TimeMapper from './mappers/TimeMapper';
 
 class TimeService {
 
@@ -6,20 +7,28 @@ class TimeService {
     this.httpClient = new HttpClient(process.env.REACT_APP_BASE_URL_API);
   }
 
-  listTimes(orderBy = 'asc') {
-    return this.httpClient.get(`/times?orderBy=${orderBy}`);
+  async listTimes(orderBy = 'asc') {
+    const times = await this.httpClient.get(`/times?orderBy=${orderBy}`);
+
+    return times.map(TimeMapper.toDomain);
   }
 
-  getTimeById(id) {
-    return this.httpClient.get(`/times/${id}`);
+  async getTimeById(id) {
+    const time = await this.httpClient.get(`/times/${id}`);
+
+    return TimeMapper.toDomain(time);
   }
 
   createTime(time) {
-    return this.httpClient.post('/times', { body: time });
+    const body = TimeMapper.toPersistence(time);
+
+    return this.httpClient.post('/times', { body });
   }
 
   updateTime(id, time) {
-    return this.httpClient.put(`/times/${id}`, { body: time });
+    const body = TimeMapper.toPersistence(time);
+
+    return this.httpClient.put(`/times/${id}`, { body });
   }
 
   deleteTime(id) {

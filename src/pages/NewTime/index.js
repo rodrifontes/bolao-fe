@@ -8,17 +8,11 @@ import toast from '../../utils/toast';
 export default function NewTime() {
   const formTimeRef = useRef(null);
 
-  async function handleSubmit(formData) {
+  async function handleSubmit(time) {
     try {
-      const time = {
-        nome: formData.nome,
-        nome_reduzido: formData.nomeReduzido,
-        path_escudo: formData.pathEscudo,
-      };
-
       await TimeService.createTime(time);
 
-      formTimeRef.current.resetFields(time);
+      formTimeRef.current.resetFields();
 
       toast({
         type: 'sucess',

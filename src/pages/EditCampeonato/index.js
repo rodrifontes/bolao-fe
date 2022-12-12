@@ -47,14 +47,8 @@ export default function EditTimes() {
     loadCampeonato();
   }, [id, safeAsyncAction, history])
 
-  async function handleSubmit(formData) {
+  async function handleSubmit(campeonato) {
     try {
-      const campeonato = {
-        nome: formData.nome,
-        nome_reduzido: formData.nomeReduzido,
-        path_escudo: formData.pathEscudo,
-      };
-
       const campeonatoData = await CampeonatoService.updateCampeonato(id, campeonato);
 
       setCampeonatoNome(campeonatoData.nome);

@@ -8,15 +8,11 @@ import Header from '../../components/Header';
 export default function NewCampeonato() {
   const formCampeonatoRef = useRef(null);
 
-  async function handleSubmit(formData) {
+  async function handleSubmit(campeonato) {
     try {
-      const campeonato = {
-        nome: formData.nome,
-      };
-
       await CampeonatoService.createCampeonato(campeonato);
 
-      formCampeonatoRef.current.resetFields(campeonato);
+      formCampeonatoRef.current.resetFields();
 
       toast({
         type: 'sucess',

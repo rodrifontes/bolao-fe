@@ -1,4 +1,5 @@
 import HttpClient from './utils/HttpClient';
+import CampeonatoMapper from './mappers/CampeonatoMapper';
 
 class CampeonatoService {
 
@@ -6,20 +7,28 @@ class CampeonatoService {
     this.httpClient = new HttpClient(process.env.REACT_APP_BASE_URL_API);
   }
 
-  listCampeonatos(orderBy = 'asc') {
-    return this.httpClient.get(`/campeonatos?orderBy=${orderBy}`);
+  async listCampeonatos(orderBy = 'asc') {
+    const campeonatos = await this.httpClient.get(`/campeonatos?orderBy=${orderBy}`);
+
+    return campeonatos.map(CampeonatoMapper.toDomain);
   }
 
-  getCampeonatoById(id) {
-    return this.httpClient.get(`/campeonatos/${id}`);
+  async getCampeonatoById(id) {
+    const campeonato = await this.httpClient.get(`/campeonatos/${id}`);
+
+    return CampeonatoMapper.toDomain(campeonato);
   }
 
   createCampeonato(campeonato) {
-    return this.httpClient.post('/campeonatos', { body: campeonato });
+    const body = CampeonatoMapper.toPersistence(campeonato);
+
+    return this.httpClient.post('/campeonatos', { body });
   }
 
   updateCampeonato(id, campeonato) {
-    return this.httpClient.put(`/campeonatos/${id}`, { body: campeonato });
+    const body = CampeonatoMapper.toPersistence(campeonato);
+
+    return this.httpClient.put(`/campeonatos/${id}`, { body });
   }
 
   deleteCampeonato(id) {

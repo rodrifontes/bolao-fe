@@ -6,9 +6,9 @@ import formatDate from '../../utils/formatDate';
 
 export default function FormResultado({ jogo, onSubmit }) {
 
-  const [golsMandante, setGolsMandante] = useState(jogo.gols_mandante ?? '');
-  const [golsVisitante, setGolsVisitante] = useState(jogo.gols_visitante ?? '');
-  const [jogoId] = useState(jogo.id);
+  const [golsMandante, setGolsMandante] = useState(jogo.mandante.gols ?? '');
+  const [golsVisitante, setGolsVisitante] = useState(jogo.visitante.gols ?? '');
+  const [id] = useState(jogo.id);
   const [message, setMessage] = useState();
 
   function handlesGolsMandate(event) {
@@ -30,7 +30,7 @@ export default function FormResultado({ jogo, onSubmit }) {
       setMessage('Salvando...');
 
       await onSubmit({
-        jogoId, golsMandante, golsVisitante
+        id, golsMandante, golsVisitante
       });
 
       setMessage('Resultado salvo!');
@@ -46,16 +46,16 @@ export default function FormResultado({ jogo, onSubmit }) {
   return (
     <Card>
       <div className="info-partida">
-        <strong>{jogo.campeonato_nome}</strong>
+        <strong>{jogo.campeonato.nome}</strong>
         <small>{formatDate(jogo.data)}</small>
         <small>{jogo.local}</small>
       </div>
 
       <div className="times">
         <div className="time">
-          <span className='nome'>{jogo.mandante_nome}</span>
-          <span className='nome_reduzido'>{jogo.mandante_nome_reduzido}</span>
-          <img src={jogo.mandante_path_escudo} alt={jogo.mandante_nome} />
+          <span className='nome'>{jogo.mandante.nome}</span>
+          <span className='nome_reduzido'>{jogo.mandante.nomereduzido}</span>
+          <img src={jogo.mandante.pathEscudo} alt={jogo.mandante.nome} />
         </div>
 
         <div className="placar">
@@ -71,9 +71,9 @@ export default function FormResultado({ jogo, onSubmit }) {
         </div>
 
         <div className="time">
-          <img src={jogo.visitante_path_escudo} alt={jogo.visitante_nome} />
-          <span className='nome'>{jogo.visitante_nome}</span>
-          <span className='nome_reduzido'>{jogo.visitante_nome_reduzido}</span>
+          <img src={jogo.visitante.pathEscudo} alt={jogo.visitante.nome} />
+          <span className='nome'>{jogo.visitante.nome}</span>
+          <span className='nome_reduzido'>{jogo.visitante.nomeReduzido}</span>
         </div>
       </div>
 

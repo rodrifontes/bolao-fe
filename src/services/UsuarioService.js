@@ -1,3 +1,4 @@
+import UsuarioMapper from './mappers/UsuarioMapper';
 import HttpClient from './utils/HttpClient';
 
 class UsuarioService {
@@ -6,20 +7,28 @@ class UsuarioService {
     this.httpClient = new HttpClient(process.env.REACT_APP_BASE_URL_API);
   }
 
-  listUsuarios(orderBy = 'asc') {
-    return this.httpClient.get(`/usuarios?orderBy=${orderBy}`);
+  async listUsuarios(orderBy = 'asc') {
+    const usuarios = await this.httpClient.get(`/usuarios?orderBy=${orderBy}`);
+
+    return usuarios.map(UsuarioMapper.toDomain);
   }
 
-  getusuarioById(id) {
-    return this.httpClient.get(`/usuarios/${id}`);
+  async getusuarioById(id) {
+    const usuario = await this.httpClient.get(`/usuarios/${id}`);
+
+    return UsuarioMapper.toDomain(usuario);
   }
 
-  createUsuario(usuario) {
-    return this.httpClient.post('/usuarios', { body: usuario });
+  async createUsuario(usuario) {
+    const body = UsuarioMapper.toPersistence(usuario);
+
+    return this.httpClient.post('/usuarios', { body });
   }
 
   updateUsuario(id, usuario) {
-    return this.httpClient.put(`/usuarios/${id}`, { body: usuario });
+    const body = UsuarioMapper.toPersistence(usuario);
+
+    return this.httpClient.put(`/usuarios/${id}`, { body });
   }
 
   deleteUsuario(id) {
@@ -27,7 +36,9 @@ class UsuarioService {
   }
 
   login(usuario) {
-    return this.httpClient.post('/login', { body: usuario });
+    const body = UsuarioMapper.toPersistence(usuario);
+
+    return this.httpClient.post('/login', { body });
   }
 
 }

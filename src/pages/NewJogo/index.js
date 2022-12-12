@@ -8,20 +8,11 @@ import toast from '../../utils/toast';
 export default function NewJogo() {
   const formJogoRef = useRef(null);
 
-  async function handleSubmit(formData) {
+  async function handleSubmit(jogo) {
     try {
-      const jogo = {
-        mandante_id: formData.mandanteId,
-        visitante_id: formData.visitanteId,
-        campeonato_id: formData.campeonatoId,
-        fase_id: formData.faseId,
-        data: formData.data,
-        local: formData.local,
-      };
-
       await JogoService.createJogo(jogo);
 
-      formJogoRef.current.resetFields(jogo);
+      formJogoRef.current.resetFields();
 
       toast({
         type: 'sucess',

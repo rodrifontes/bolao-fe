@@ -1,3 +1,4 @@
+import PalpiteMapper from './mappers/PalpiteMapper';
 import HttpClient from './utils/HttpClient';
 
 class PalpiteService {
@@ -6,12 +7,16 @@ class PalpiteService {
     this.httpClient = new HttpClient(process.env.REACT_APP_BASE_URL_API);
   }
 
-  listJogos(orderBy = 'asc', userId) {
-    return this.httpClient.get(`/palpites?orderBy=${orderBy}&userId='${userId}'`);
+  async listJogos(orderBy = 'asc', userId) {
+    const jogos = await this.httpClient.get(`/palpites?orderBy=${orderBy}&userId='${userId}'`);
+
+    return jogos.map(PalpiteMapper.toDomain);
   }
 
   createPalpite(palpite) {
-    return this.httpClient.post('/palpites', { body: palpite });
+    const body = PalpiteMapper.toPersistence(palpite);
+
+    return this.httpClient.post('/palpites', { body });
   }
 
 }

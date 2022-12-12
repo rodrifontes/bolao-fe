@@ -48,10 +48,10 @@ const FormJogo = forwardRef(({ buttonLabel, onSubmit }, ref) => {
 
   useImperativeHandle(ref, () => ({
     setFieldsValues: (jogo) => {
-      setMandanteId(jogo.mandante_id ?? '');
-      setVisitanteId(jogo.visitante_id ?? '');
-      setCampeonatoId(jogo.campeonato_id ?? '');
-      setFaseId(jogo.fase_id ?? '');
+      setMandanteId(jogo.mandante.id ?? '');
+      setVisitanteId(jogo.visitante.id ?? '');
+      setCampeonatoId(jogo.campeonato.id ?? '');
+      setFaseId(jogo.fase.id ?? '');
       setData(jogo.data ?? '');
       setLocal(jogo.local ?? '');
     },

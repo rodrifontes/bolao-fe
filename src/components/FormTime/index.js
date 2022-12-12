@@ -27,8 +27,8 @@ const FormTime = forwardRef(({ buttonLabel, onSubmit }, ref) => {
   useImperativeHandle(ref, () => ({
     setFieldsValues: (time) => {
       setNome(time.nome ?? '');
-      setNomeReduzido(time.nome_reduzido ?? '');
-      setPathEscudo(time.path_escudo ?? '');
+      setNomeReduzido(time.nomeReduzido ?? '');
+      setPathEscudo(time.pathEscudo ?? '');
     },
     resetFields: () => {
       setNome('');

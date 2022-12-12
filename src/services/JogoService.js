@@ -1,4 +1,6 @@
 import HttpClient from './utils/HttpClient';
+import JogoMapper from './mappers/JogoMapper';
+import ResultadoMapper from './mappers/ResultadoMapper';
 
 class JogoService {
 
@@ -6,21 +8,28 @@ class JogoService {
     this.httpClient = new HttpClient(process.env.REACT_APP_BASE_URL_API);
   }
 
-  listJogos(orderBy = 'asc') {
-    return this.httpClient.get(`/jogos?orderBy=${orderBy}`);
+  async listJogos(orderBy = 'asc') {
+    const jogos = await this.httpClient.get(`/jogos?orderBy=${orderBy}`);
+
+    return jogos.map(JogoMapper.toDomain);
   }
 
-  getTimeById(id) {
-    return this.httpClient.get(`/jogos/${id}`);
+  async getTimeById(id) {
+    const jogo = await this.httpClient.get(`/jogos/${id}`);
+
+    return jogo.toDomain(jogo);
   }
 
   createJogo(jogo) {
-    return this.httpClient.post('/jogos', { body: jogo });
+    const body = JogoMapper.toPersistence(jogo);
+
+    return this.httpClient.post('/jogos', { body });
   }
 
   updateResultado(id, resultado) {
-    console.log(id, resultado)
-    return this.httpClient.put(`/jogos/resultado/${id}`, { body: resultado });
+    const body = ResultadoMapper.toPersistence(resultado);
+
+    return this.httpClient.put(`/jogos/resultado/${id}`, { body });
   }
 
   deleteJogo(id) {

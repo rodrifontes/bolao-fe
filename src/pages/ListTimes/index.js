@@ -223,7 +223,7 @@ export default function ListTimes() {
               {filteredTimes.map((time) => (
                 <Card key={time.id}>
                   <div className="info">
-                    <img src={time.path_escudo} alt={time.nome} />
+                    <img src={time.pathEscudo} alt={time.nome} />
                     <span>{time.nome}</span>
                   </div>
                   <div className="actions">

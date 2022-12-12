@@ -1,3 +1,4 @@
+import FaseMapper from './mappers/FaseMapper';
 import HttpClient from './utils/HttpClient';
 
 class FaseService {
@@ -5,8 +6,10 @@ class FaseService {
     this.httpClient = new HttpClient(process.env.REACT_APP_BASE_URL_API);
   }
 
-  listFases() {
-    return this.httpClient.get('/fases');
+  async listFases() {
+    const fases = await this.httpClient.get('/fases');
+
+    return fases.map(FaseMapper.toDomain);
   }
 }
 

@@ -47,14 +47,8 @@ export default function EditTimes() {
     loadTime();
   }, [id, safeAsyncAction, history])
 
-  async function handleSubmit(formData) {
+  async function handleSubmit(time) {
     try {
-      const time = {
-        nome: formData.nome,
-        nome_reduzido: formData.nomeReduzido,
-        path_escudo: formData.pathEscudo,
-      };
-
       const timeData = await TimeService.updateTime(id, time);
 
       setTimeNome(timeData.nome);

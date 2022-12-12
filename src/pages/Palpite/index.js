@@ -47,15 +47,8 @@ export default function Palpite() {
     loadJogos();
   }
 
-  async function handleSubmitPalpite(formData) {
-    const palpite = {
-      usuario_id: user.id,
-      jogo_id: formData.jogoId,
-      placar_mandante: formData.placarMandante,
-      placar_visitante: formData.placarVisitante,
-    };
-
-    await PalpiteService.createPalpite(palpite);
+  function handleSubmitPalpite(palpite) {
+    PalpiteService.createPalpite({ ...palpite, usuarioId: user.id });
   }
 
   return (

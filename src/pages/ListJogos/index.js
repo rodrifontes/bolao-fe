@@ -47,13 +47,8 @@ export default function ListJogos() {
     loadJogos();
   }
 
-  async function handleSubmitResultado(formData) {
-    const resultado = {
-      gols_mandante: formData.golsMandante,
-      gols_visitante: formData.golsVisitante,
-    };
-
-    await JogoService.updateResultado(formData.jogoId, resultado);
+  async function handleSubmitResultado(resultado) {
+    JogoService.updateResultado(resultado.id, resultado);
   }
 
   return (

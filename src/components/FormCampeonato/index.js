@@ -23,8 +23,8 @@ const FormCampeonato = forwardRef(({ buttonLabel, onSubmit }, ref) => {
   const isFormValid = (nome && errors.length === 0);
 
   useImperativeHandle(ref, () => ({
-    setFieldsValues: (time) => {
-      setNome(time.nome ?? '');
+    setFieldsValues: (campeonato) => {
+      setNome(campeonato.nome ?? '');
     },
     resetFields: () => {
       setNome('');
