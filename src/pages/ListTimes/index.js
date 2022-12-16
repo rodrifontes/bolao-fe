@@ -84,7 +84,6 @@ export default function ListTimes() {
 
   function handleCloseDeleteModal() {
     setIsDeleteModalVisible(false);
-    setTimeBeingDeleted(null);
   }
 
   async function handleConfirmDeleteTime() {

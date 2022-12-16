@@ -84,7 +84,6 @@ export default function ListCampeonatos() {
 
   function handleCloseDeleteModal() {
     setIsDeleteModalVisible(false);
-    setCampeonatoBeingDeleted(null);
   }
 
   async function handleConfirmDeleteCampeonato() {
