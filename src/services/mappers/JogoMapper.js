@@ -1,3 +1,5 @@
+import { formatIsoDate } from "../../utils/formatDate";
+
 class JogoMapper {
 
   toPersistence(domainJogo) {
@@ -7,7 +9,7 @@ class JogoMapper {
       fase_id: domainJogo.faseId,
       mandante_id: domainJogo.mandanteId,
       visitante_id: domainJogo.visitanteId,
-      data: domainJogo.data,
+      data: formatIsoDate(domainJogo.data),
       local: domainJogo.local,
     };
   }

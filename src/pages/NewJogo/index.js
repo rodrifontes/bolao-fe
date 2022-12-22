@@ -31,6 +31,7 @@ export default function NewJogo() {
       <Header />
 
       <FormHeader title="Novo Jogo" />
+
       <FormJogo
         ref={formJogoRef}
         buttonLabel="Cadastrar"

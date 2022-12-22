@@ -14,6 +14,8 @@ import Input from '../Input';
 import Button from '../Button';
 import Select from '../Select';
 
+import { maskDate } from '../../utils/formatDate';
+
 const FormJogo = forwardRef(({ buttonLabel, onSubmit }, ref) => {
   const [mandanteId, setMandanteId] = useState('');
   const [mandantes, setMandantes] = useSafeAsyncState([]);
@@ -122,7 +124,7 @@ const FormJogo = forwardRef(({ buttonLabel, onSubmit }, ref) => {
   }, [setFases, setIsloadingFases]);
 
   function handleDataChange(event) {
-    setData(event.target.value);
+    setData(maskDate(event.target.value));
 
     if (!event.target.value) {
       setError({ field: 'data', message: 'A data do jogo é obrigatória.' });
@@ -217,6 +219,7 @@ const FormJogo = forwardRef(({ buttonLabel, onSubmit }, ref) => {
         <Input
           placeholder="Data *"
           value={data}
+          maxLength="15"
           onChange={handleDataChange}
           error={getErrorMessageByFieldName('data')}
           disabled={isSubmitting}

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import delay from '../../utils/delay';
 import Input from '../Input';
 import { Card } from './styles';
-import formatDate from '../../utils/formatDate';
+import { formatDateToShow } from '../../utils/formatDate';
 
 export default function Placar({ jogo, onSubmit }) {
 
@@ -66,7 +66,7 @@ export default function Placar({ jogo, onSubmit }) {
     <Card>
       <div className="info-partida">
         <strong>{jogo.campeonato.nome}</strong>
-        <small>{formatDate(jogo.data)}</small>
+        <small>{formatDateToShow(jogo.data)}</small>
         <small>{jogo.local}</small>
       </div>
 
