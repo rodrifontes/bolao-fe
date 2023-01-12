@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import GlobalStyles from '../../assets/styles/global';
 import defaultTheme from '../../assets/styles/themes/default';
 
-import Rotas from '../../Rotas';
+import Router from '../../Router';
 
 import { Container } from './styles';
 
@@ -21,7 +21,7 @@ function App() {
 
         <Container>
           <AuthProvider>
-            <Rotas />
+            <Router />
           </AuthProvider>
         </Container>
       </ThemeProvider>

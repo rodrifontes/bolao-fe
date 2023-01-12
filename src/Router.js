@@ -22,7 +22,7 @@ import NewJogo from './pages/NewJogo';
 
 import Regulamento from './pages/Regulamento';
 
-export default function Rotas() {
+export default function Router() {
 
   const { isLogged } = useAuth();
 
